@@ -88,8 +88,8 @@ def detectLife(listDir, directory):
 			imagePath = directory + "/" + imgpath
 			image = Image.open(imagePath)
 			width, height = image.size
-			if width > 500:
-				imagePath = shrinkRay.shrink(imagePath, 500)
+			if height > 500:
+				imagePath = shrinkRay.shrinkByHeight(imagePath, 500)
 
 			print cascades
 			for cascade in cascades:

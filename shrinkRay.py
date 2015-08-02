@@ -2,15 +2,12 @@
 
 import cv2
 
-def shrink(image, width):
+def shrinkByWidth(image, width):
 	img = cv2.imread(image)
 
 	# preserve aspect ratio so the image does not look skewed or distorted 
 	ratio = img.shape[0]/float(img.shape[1])
 	dimension = (width, (width*img.shape[0])/img.shape[1])
-	print img.shape
-	print ratio
-	print dimension
 
 	# resize the image
 	resizedImg = cv2.resize(img, dimension, interpolation = cv2.INTER_AREA)
@@ -18,4 +15,21 @@ def shrink(image, width):
 	# overwrite the old image
 	cv2.imwrite(image, resizedImg)
 
+def shrinkByHeight(image, height):
+	img = cv2.imread(image)
 
+	# preserve aspect ratio so the image does not look skewed or distorted 
+	ratio = img.shape[1]/float(img.shape[0])
+	dimension = ((height*img.shape[0])/img.shape[1], height)
+	print height
+	print "original dimensions: " + str(img.shape[0]) + " " + str(img.shape[1])
+	print (height*img.shape[0])/img.shape[1]
+	print dimension
+
+	# resize the image
+	resizedImg = cv2.resize(img, dimension, interpolation = cv2.INTER_AREA)
+	print "new dimensions: " + str(resizedImg.shape[0]) + " " + str(resizedImg.shape[1])
+
+
+	# overwrite the old image
+	#cv2.imwrite(image, resizedImg)
