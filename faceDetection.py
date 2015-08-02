@@ -10,7 +10,6 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         FileTransferSpeed, FormatLabel, Percentage, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
-
 cascades = []
 
 #detect faces in the provided image
@@ -44,14 +43,18 @@ def detection(cascade, image):
 	return len(faces)
 
 def cascade():
+	try:
+		cDir = os.listdir(sys.argv[4])
+		print cDir
+	except:
+		print "ERROR: Your cascades directory was accidentally pulverised.\n"
+		sys.exit()
+
 	# create the haar cascade and initialize it with our face cascade
 	# each cascade is an XML file that contains the data to detect faces
-	faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-	faceCascade2 = cv2.CascadeClassifier('haarcascade_frontalface.alt.xml')
-	faceCascade3 = cv2.CascadeClassifier('haarcascade_frontalface.alt2.xml')
-	cascades.append(faceCascade)
-	cascades.append(faceCascade2)
-	cascades.append(faceCascade3)
+	for cascadeFile in cDir:
+		cascades.append(cv2.CascadeClassifier(cascadeFile))
+	print cascades
 
 def detectLife(listDir, directory):
 	#step through all files in directory
