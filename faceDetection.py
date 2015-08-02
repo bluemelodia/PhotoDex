@@ -10,21 +10,25 @@ import sys
 import os
 import math
 
+import shrinkRay
+
 from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         FileTransferSpeed, FormatLabel, Percentage, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
+
 cascades = []
 
 #TODO: resize the images
 #TODO: use a larger library, ensure the progress bar is working
 
-#detect faces in the provided image
+# detect faces in the provided image
 def detection(cascade, image):
 	# read the image
 	img = cv2.imread(image)
 	if img is None or len(img.shape) <= 0:
 		return 0
+
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	# detect faces in the image
 	# detectMultiScale: general function that detects objects, depends on provided cascade
@@ -38,15 +42,15 @@ def detection(cascade, image):
 
 	print faces
 
-	#loop over the bounding boxes, draw a rectangle around the faces
-	#where (x, y) is the starting location of the face
+	# loop over the bounding boxes, draw a rectangle around the faces
+	# where (x, y) is the starting location of the face
 	for (x, y, w, h) in faces:
 		cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
     		roi_gray = gray[y:y+h, x:x+w]
     		roi_color = img[y:y+h, x:x+w]
-	cv2.imshow("Faces", img)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
+	#cv2.imshow("Faces", img)
+	#cv2.waitKey(0)
+	#cv2.destroyAllWindows()
 	return len(faces)
 
 def cascade():
@@ -63,26 +67,33 @@ def cascade():
 		cascades.append(cv2.CascadeClassifier(cascadeFile))
 
 def detectLife(listDir, directory):
-	#step through all files in directory
+	# step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
 
-	#initialize the progress variables
+	# initialize the progress variables
 	total = len(files)
 	count = 0
 	progress = 0
 	faceCount = 0 # number of photos that contain faces
 
-	#initialize the progress bar
+	# initialize the progress bar
 	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=total).start()
 
 	for imgpath in listDir:
 		path = sys.argv[1] + "/" + imgpath
 		print path
 		print I.what(path)
-		if I.what(path) != None: # is this an accepted image type?
+		if I.what(path) != None:
+			# resize the image if its width exceeds 500 pixels
+			imagePath = directory + "/" + imgpath
+			image = Image.open(imagePath)
+			width, height = image.size
+			if width > 500:
+				imagePath = shrinkRay.shrink(imagePath, 500)
+
 			print cascades
 			for cascade in cascades:
-				faces = detection(cascade, directory + "/" + imgpath)
+				faces = detection(cascade, imagePath)
 				# we know there is a face, no need to try subsequent cascades
 				if faces >= 1:			
 					print "Found a face"

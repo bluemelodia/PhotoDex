@@ -3,6 +3,7 @@ import os
 import sys
 
 import faceDetection
+import shrinkRay
 
 def main():
 	if len(sys.argv) < 4:
@@ -34,6 +35,9 @@ def main():
 		print "Activating clone detection algorithm...."
 	elif sys.argv[2] == 'F':
 		print "Commencing search for human life..."
+		#TODO: if the images are too large, you must apply the shrink ray protocol first
+		
+		
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
 	elif sys.argv[2] == 'R':
