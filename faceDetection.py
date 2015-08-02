@@ -30,6 +30,8 @@ def detection(cascade, image):
 		minNeighbors = 5, 
 	)
 
+	print faces
+
 	#loop over the bounding boxes, draw a rectangle around the faces
 	#where (x, y) is the starting location of the face
 	for (x, y, w, h) in faces:
@@ -44,17 +46,14 @@ def detection(cascade, image):
 def cascade():
 	# create the haar cascade and initialize it with our face cascade
 	# each cascade is an XML file that contains the data to detect faces
-	if sys.argv[2] == 'P':
-		faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-		faceCascade2 = cv2.CascadeClassifier('haarcascade_frontalface.alt.xml')
-		faceCascade3 = cv2.CascadeClassifier('haarcascade_frontalface.alt2.xml')
-		cascades.append(faceCascade)
-		cascades.append(faceCascade2)
-		cascades.append(faceCascade3)
+	faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+	faceCascade2 = cv2.CascadeClassifier('haarcascade_frontalface.alt.xml')
+	faceCascade3 = cv2.CascadeClassifier('haarcascade_frontalface.alt2.xml')
+	cascades.append(faceCascade)
+	cascades.append(faceCascade2)
+	cascades.append(faceCascade3)
 
-	# initialize array of accepted image types
-
-def detectLife(listDir, directory, types):
+def detectLife(listDir, directory):
 	#step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
 
@@ -67,13 +66,12 @@ def detectLife(listDir, directory, types):
 	#initialize the progress bar
 	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=total).start()
 
-
 	for imgpath in listDir:
-		# display progress to the user
-		bar.update(count)
-
 		path = sys.argv[1] + "/" + imgpath
-		if I.what(path) in types: # is this an accepted image type?
+		print path
+		print I.what(path)
+		if I.what(path) != None: # is this an accepted image type?
+			print cascades
 			for cascade in cascades:
 				faces = detection(cascade, directory + "/" + imgpath)
 				# we know there is a face, no need to try subsequent cascades
@@ -81,5 +79,6 @@ def detectLife(listDir, directory, types):
 					print "Found a face"
 			else:
 				continue
+		# display progress to the user
+		bar.update(count)
 	bar.finish()
-

@@ -28,15 +28,6 @@ def main():
 		print "We shall wait patiently while you attempt to recapture it.\n"
 		sys.exit()
 
-	# initialize array of accepted image types
-	imageTypes = []
-	imageTypes.append("jpeg")
-	imageTypes.append("png")
-	imageTypes.append("ppm")
-	imageTypes.append("pgm")
-	imageTypes.append("pbm")
-	imageTypes.append("tiff")
-
 	if sys.argv[2] == 'C':
 		print "Sorting color protocol activated..."
 	elif sys.argv[2] == 'D':
@@ -44,7 +35,7 @@ def main():
 	elif sys.argv[2] == 'F':
 		print "Commencing search for human life..."
 		faceDetection.cascade()
-		faceDetection.detectLife(Home, sys.argv[1], imageTypes)
+		faceDetection.detectLife(Home, sys.argv[1])
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"
 		print "Please consult the manual for our authorized procedures:"
