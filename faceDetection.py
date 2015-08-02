@@ -1,3 +1,5 @@
+# Created by: bluemelodia
+
 # In order to run the face detection algorithm, a fifth argument is necessary:
 # a directory containing the haar cascade XML files
 # Example: python main.py ../Profile_Pictures F ../Art cascades
@@ -88,8 +90,8 @@ def detectLife(listDir, directory):
 			imagePath = directory + "/" + imgpath
 			image = Image.open(imagePath)
 			width, height = image.size
-			if height > 500:
-				imagePath = shrinkRay.shrinkByHeight(imagePath, 500)
+			if width > 500:
+				imagePath = shrinkRay.shrinkByWidth(imagePath, 500)
 
 			for cascade in cascades:
 				faces = detection(cascade, imagePath)

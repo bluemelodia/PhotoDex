@@ -1,3 +1,5 @@
+# Created by: bluemelodia
+
 import cv2
 import os
 import sys
@@ -35,13 +37,14 @@ def main():
 		print "Activating clone detection algorithm...."
 	elif sys.argv[2] == 'F':
 		print "Commencing search for human life..."
-		#TODO: if the images are too large, you must apply the shrink ray protocol first
-		
-		
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
 	elif sys.argv[2] == 'R':
 		print "Busting out the shrink ray..."
+		if (sys.argv[4].isdigit() == False):
+			print "You'll have to be more specific about the settings for the shrink ray. How small is small?\n"
+			sys.exit()
+		shrinkRay.shrinkImages(Home, sys.argv[1])
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"
 		print "Please consult the manual for our authorized procedures:"
