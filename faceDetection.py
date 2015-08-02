@@ -1,3 +1,7 @@
+# In order to run the face detection algorithm, a fifth argument is necessary:
+# a directory containing the haar cascade XML files
+# Example: python main.py ../Profile_Pictures F ../Art cascades
+
 from __future__ import division
 from PIL import Image
 import imghdr as I
@@ -11,6 +15,9 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
 cascades = []
+
+#TODO: resize the images
+#TODO: use a larger library, ensure the progress bar is working
 
 #detect faces in the provided image
 def detection(cascade, image):
@@ -54,7 +61,6 @@ def cascade():
 	# each cascade is an XML file that contains the data to detect faces
 	for cascadeFile in cDir:
 		cascades.append(cv2.CascadeClassifier(cascadeFile))
-	print cascades
 
 def detectLife(listDir, directory):
 	#step through all files in directory
