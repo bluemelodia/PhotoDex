@@ -19,10 +19,12 @@ def shrinkByHeight(image, height):
 	img = cv2.imread(image)
 
 	# preserve aspect ratio so the image does not look skewed or distorted 
-	ratio = img.shape[1]/float(img.shape[0])
-	dimension = ((height*img.shape[0])/img.shape[1], height)
-	print height
+	ratio = img.shape[0]/float(img.shape[1])
+	print "ratio: " + str(ratio)
+	print "height: " + str(height)
 	print "original dimensions: " + str(img.shape[0]) + " " + str(img.shape[1])
+
+	dimension = ((height*img.shape[1])/img.shape[0], height)
 	print (height*img.shape[0])/img.shape[1]
 	print dimension
 
@@ -32,4 +34,4 @@ def shrinkByHeight(image, height):
 
 
 	# overwrite the old image
-	#cv2.imwrite(image, resizedImg)
+	cv2.imwrite(image, resizedImg)

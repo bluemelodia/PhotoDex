@@ -91,7 +91,6 @@ def detectLife(listDir, directory):
 			if height > 500:
 				imagePath = shrinkRay.shrinkByHeight(imagePath, 500)
 
-			print cascades
 			for cascade in cascades:
 				faces = detection(cascade, imagePath)
 				# we know there is a face, no need to try subsequent cascades
