@@ -36,12 +36,15 @@ def main():
 		print "Commencing search for human life..."
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
+	elif sys.argv[2] == 'R':
+		print "Busting out the shrink ray..."
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"
 		print "Please consult the manual for our authorized procedures:"
 		print "\t'C' - Dominant colors sorting protocol"
 		print "\t'D' - Duplicate image sorting protocol"
-		print "\t'F' - Search for human life\n"
+		print "\t'F' - Search for human life"
+		print "\t'R' - Shrink ray\n"
 		sys.exit()
 
 if __name__ == "__main__": main()
