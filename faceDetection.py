@@ -1,4 +1,4 @@
-# Created by: bluemelodia
+# Created by: Melanie Hsu (bluemelodia)
 
 # In order to run the face detection algorithm, a fifth argument is necessary:
 # a directory containing the haar cascade XML files
@@ -21,7 +21,6 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
 
 cascades = []
 
-#TODO: resize the images
 #TODO: use a larger library, ensure the progress bar is working
 
 # detect faces in the provided image
@@ -42,7 +41,7 @@ def detection(cascade, image):
 		minNeighbors = 5, 
 	)
 
-	print faces
+	#print faces
 
 	# loop over the bounding boxes, draw a rectangle around the faces
 	# where (x, y) is the starting location of the face
@@ -58,7 +57,6 @@ def detection(cascade, image):
 def cascade():
 	try:
 		cDir = os.listdir(sys.argv[4])
-		print cDir
 	except:
 		print "ERROR: Your cascades directory was accidentally pulverised.\n"
 		sys.exit()
@@ -79,12 +77,15 @@ def detectLife(listDir, directory):
 	faceCount = 0 # number of photos that contain faces
 
 	# initialize the progress bar
-	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=total).start()
+	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
 	for imgpath in listDir:
 		path = sys.argv[1] + "/" + imgpath
-		print path
-		print I.what(path)
+
+		# update progress and display it to the user
+		count += 1
+		bar.update((count/total)*100)
+
 		if I.what(path) != None:
 			# resize the image if its width exceeds 500 pixels
 			imagePath = directory + "/" + imgpath
@@ -98,8 +99,9 @@ def detectLife(listDir, directory):
 				# we know there is a face, no need to try subsequent cascades
 				if faces >= 1:			
 					print "Found a face"
-			else:
-				continue
-		# display progress to the user
-		bar.update(count)
+					faceCount += 1
+					continue
+		else:
+			continue
 	bar.finish()
+	print "We have discovered " + str(faceCount) + " humans."

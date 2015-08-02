@@ -1,4 +1,4 @@
-# Created by: bluemelodia
+# Created by: Melanie Hsu (bluemelodia)
 
 # A handy ray that will shrink the size of your images
 # If calling through 'R' protocol, supply a size argument to main as the last argument

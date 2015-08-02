@@ -1,4 +1,4 @@
-# Created by: bluemelodia
+# Created by: Melanie Hsu (bluemelodia)
 
 import cv2
 import os
@@ -42,7 +42,8 @@ def main():
 	elif sys.argv[2] == 'R':
 		print "Busting out the shrink ray..."
 		if (sys.argv[4].isdigit() == False):
-			print "You'll have to be more specific about the settings for the shrink ray. How small is small?\n"
+			print "You'll have to be more specific about the settings for the shrink ray."
+			print "How small is small?\n"
 			sys.exit()
 		shrinkRay.shrinkImages(Home, sys.argv[1])
 	else:
