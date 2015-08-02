@@ -40,12 +40,15 @@ def main():
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
 	elif sys.argv[2] == 'R':
-		print "Busting out the shrink ray..."
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."
 			print "How small is small?\n"
 			sys.exit()
-		shrinkRay.shrinkImages(Home, sys.argv[1])
+		if (sys.argv[5] != 'H' and sys.argv[5] != 'W'):
+			print "Wait, do you want them short or skinny? You can't expect me to guess!"
+			sys.exit()
+		print "Busting out the shrink ray..."
+		shrinkRay.shrinkImages(Home, sys.argv[1], sys.argv[4], sys.argv[5])
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"
 		print "Please consult the manual for our authorized procedures:"
