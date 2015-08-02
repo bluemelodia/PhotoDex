@@ -51,14 +51,14 @@ def shrinkImages(listDir, directory, size, flag):
 	progress = 0
 
 	# initialize the progress bar
-	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=20).start()
 
 	for imgpath in listDir:
 		path = directory + "/" + imgpath
 
 		# update progress and display it to the user
 		count += 1
-		bar.update((float(count)/total)*100)
+		bar.update((float(count)/total)*20)
 
 		if I.what(path) != None:
 			imagePath = directory + "/" + imgpath
