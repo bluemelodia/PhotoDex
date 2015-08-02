@@ -84,7 +84,7 @@ def detectLife(listDir, directory):
 
 		# update progress and display it to the user
 		count += 1
-		bar.update((count/total)*100)
+		bar.update((float(count)/total)*100)
 
 		if I.what(path) != None:
 			# resize the image if its width exceeds 500 pixels
@@ -104,4 +104,4 @@ def detectLife(listDir, directory):
 		else:
 			continue
 	bar.finish()
-	print "We have discovered " + str(faceCount) + " humans."
+	print "\nWe have discovered " + str(faceCount) + " humans.\n"

@@ -1,5 +1,8 @@
 # Created by: Melanie Hsu (bluemelodia)
 
+# This class performs the necessary command-line argument checks before launching a sorting protocol.
+# Some protocols may require additional, optional command-line arguments.
+
 import cv2
 import os
 import sys
@@ -32,11 +35,11 @@ def main():
 		sys.exit()
 
 	if sys.argv[2] == 'C':
-		print "Sorting color protocol activated..."
+		print "Sorting color protocol activated...\n"
 	elif sys.argv[2] == 'D':
-		print "Activating clone detection algorithm...."
+		print "Activating clone detection algorithm....\n"
 	elif sys.argv[2] == 'F':
-		print "Commencing search for human life..."
+		print "Commencing search for human life...\n"
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
 	elif sys.argv[2] == 'R':
@@ -45,9 +48,9 @@ def main():
 			print "How small is small?\n"
 			sys.exit()
 		if (sys.argv[5] != 'H' and sys.argv[5] != 'W'):
-			print "Wait, do you want them short or skinny? You can't expect me to guess!"
+			print "Wait, do you want them short or skinny? You can't expect me to guess!\n"
 			sys.exit()
-		print "Busting out the shrink ray..."
+		print "Busting out the shrink ray...\n"
 		shrinkRay.shrinkImages(Home, sys.argv[1], sys.argv[4], sys.argv[5])
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"

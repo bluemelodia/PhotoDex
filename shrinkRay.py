@@ -58,7 +58,7 @@ def shrinkImages(listDir, directory, size, flag):
 
 		# update progress and display it to the user
 		count += 1
-		bar.update((count/total)*100)
+		bar.update((float(count)/total)*100)
 
 		if I.what(path) != None:
 			imagePath = directory + "/" + imgpath
@@ -68,4 +68,6 @@ def shrinkImages(listDir, directory, size, flag):
 				imagePath = shrinkByHeight(imagePath, int(size))
 		else:
 			continue
+		#TODO: write the shrunk pictures
 	bar.finish()
+	print "\nHoney, I shrunk the directory!\n"
