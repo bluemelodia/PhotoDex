@@ -38,6 +38,7 @@ def main():
 		print "Sorting color protocol activated...\n"
 	elif sys.argv[2] == 'D':
 		print "Activating clone detection algorithm....\n"
+		#TODO: would probably have to save past histograms
 	elif sys.argv[2] == 'F': # detects the presence of sentient beings (humans and cats)
 		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
 			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"

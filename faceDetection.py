@@ -100,12 +100,11 @@ def detectLife(listDir, directory, flag, destDir):
 				# if we know that there is a face, there's no need to try subsequent cascades
 				if faces >= 1:			
 					faceCount += 1
-					print destDir + "/" + os.path.basename(imgpath)
-
 					os.rename(imagePath, destDir + "/" + os.path.basename(imgpath))
 					break
 			bar.update((float(count)/total)*100)
 		else:
+			print "none"
 			bar.update((float(count)/total)*100)
 			continue
 	bar.finish()
