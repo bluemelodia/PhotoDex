@@ -7,4 +7,4 @@ Currently supported experimental procedures are outlined below:<br />
     Protocol 'D': Deleting or relocating duplicate or near-duplicate images (coming soon)
     Protocol 'F': Detecting sentient beings (humans and cats) and relocating
 	photos that feature them as the subject matter
-    Protocol 'S': Shrinking photos according to a specified height or width<br />
+    Protocol 'S': Shrinking photos according to a specified height or width
