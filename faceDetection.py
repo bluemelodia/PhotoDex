@@ -37,7 +37,9 @@ def detection(cascade, image):
 	faces = cascade.detectMultiScale(
 		gray, 
 		scaleFactor = 1.3, 
+		minSize = (50, 50),
 		minNeighbors = 5,
+		flags = cv2.cv.CV_HAAR_SCALE_IMAGE
 	)
 
 	# loop over the bounding boxes, draw a rectangle around the faces
@@ -61,15 +63,6 @@ def cascade():
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_profileface.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_upperbody.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_lowerbody.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_fullbody.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_eye.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_eye_tree_eyeglasses.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_righteye_2splits.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_lefteye_2splits.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface.xml'))
-	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface_extended.xml'))
 
 def detectLife(listDir, directory, flag, destDir):
 	# set the display flag
@@ -116,4 +109,4 @@ def detectLife(listDir, directory, flag, destDir):
 			bar.update((float(count)/total)*100)
 			continue
 	bar.finish()
-	print "\nWe have discovered " + str(faceCount) + " sentient beings.\n"
+	print "\nWe have discovered " + str(faceCount) + " humans.\n"
