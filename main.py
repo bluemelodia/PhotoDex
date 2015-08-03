@@ -38,14 +38,14 @@ def main():
 		print "Sorting color protocol activated...\n"
 	elif sys.argv[2] == 'D':
 		print "Activating clone detection algorithm....\n"
-	elif sys.argv[2] == 'F':
+	elif sys.argv[2] == 'F': # detects the presence of sentient beings (humans and cats)
 		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
 			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"
 			sys.exit()
 		print "Commencing search for human life...\n"
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4])
-	elif sys.argv[2] == 'S':
+	elif sys.argv[2] == 'S': # reduces the size of photos
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."
 			print "How small is small?\n"
@@ -55,6 +55,10 @@ def main():
 			sys.exit()
 		print "Busting out the shrink ray...\n"
 		shrinkRay.shrinkImages(Home, sys.argv[1], sys.argv[4], sys.argv[5])
+	elif sys.argv[2] == 'T': # retrieves and translates text in photos
+		print "Improving human understanding...\n"
+	elif sys.argv[2] == 'W': # creates a report based on workout screenshots
+		print "Generating training reports...\n"
 	else:
 		print "CRITICAL ERROR: Your intended classification method is either illegal, highly invasive, or nonexistent!\n"
 		print "Please consult the manual for our authorized procedures:"
@@ -62,6 +66,8 @@ def main():
 		print "\t'D' - Duplicate image sorting protocol"
 		print "\t'F' - Search for human life - face detection protocol"
 		print "\t'S' - Shrink ray\n"
+		print "\t'T' - Text recognition and retrieval protocol\n"
+		print "\t'W' - Generate fitness training report"
 		sys.exit()
 
 if __name__ == "__main__": main()

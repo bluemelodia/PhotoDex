@@ -61,10 +61,17 @@ def cascade():
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_default.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_profileface.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_upperbody.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_lowerbody.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_fullbody.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_eye.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_eye_tree_eyeglasses.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_righteye_2splits.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_lefteye_2splits.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface_extended.xml'))
 
 def detectLife(listDir, directory, flag):
 	# set the display flag
