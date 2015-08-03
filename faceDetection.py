@@ -48,6 +48,7 @@ def detection(cascade, image):
     		roi_gray = gray[y:y+h, x:x+w]
     		roi_color = img[y:y+h, x:x+w]
 
+    #TODO: don't show this if the user specified 'N'
 	cv2.imshow("Faces", img)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
@@ -102,3 +103,4 @@ def detectLife(listDir, directory):
 			continue
 	bar.finish()
 	print "\nWe have discovered " + str(faceCount) + " humans.\n"
+	#TODO: can do sentient beings instead of humans if you want
