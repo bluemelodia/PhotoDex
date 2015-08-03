@@ -1,6 +1,6 @@
 |- - - - - - - - - Welcome to PhotoDex Laboratory - - - - - - - - -|
 
-We specialize in manipulating and mutating directories of photos.<br />
+We are a mostly ethical laboratory that specializes in manipulating and mutating directories of photos.<br />
 Currently supported experimental procedures are outlined below:<br />
     
     Protocol 'C': Sorting photos by dominant colors (coming soon)
