@@ -8,3 +8,5 @@ Currently supported experimental procedures are outlined below:<br />
     Protocol 'F': Detecting sentient beings (humans and cats) and relocating
 	photos that feature them as the subject matter
     Protocol 'S': Shrinking photos according to a specified height or width
+    Protocol 'T': Detecting and translating text in photos (coming soon)
+    Protocol 'W': Analyzing screenshots of workout machines and generating a report (coming soon)
