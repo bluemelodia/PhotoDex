@@ -1,8 +1,8 @@
 # Created by: Melanie Hsu (bluemelodia)
 
-# In order to run the face detection algorithm, a fifth argument is necessary:
-# a directory containing the haar cascade XML files
-# Example: python main.py ../Profile_Pictures F ../Art cascades
+# To run this protocol, supply an additional fifth argument, Y - show or N - no show
+# This will determine whether the photos are displayed in a window
+# Example: python main.py ../Profile_Pictures F ../Art S
 
 from __future__ import division
 from PIL import Image
@@ -21,7 +21,7 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
 
 cascades = []
 
-#TODO: use a larger library, ensure the progress bar is working
+#TODO: check which xml files are giving the most false positives/negatives, and get rid of them
 
 # detect faces in the provided image
 def detection(cascade, image):
@@ -47,18 +47,13 @@ def detection(cascade, image):
 		cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
     		roi_gray = gray[y:y+h, x:x+w]
     		roi_color = img[y:y+h, x:x+w]
+
 	cv2.imshow("Faces", img)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 	return len(faces)
 
 def cascade():
-	try:
-		cDir = os.listdir(sys.argv[4])
-	except:
-		print "ERROR: Your cascades directory was accidentally pulverised.\n"
-		sys.exit()
-
 	# these files must be in the same directory as faceDetection.py for face detection to succeed
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_default.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt.xml'))
@@ -86,7 +81,6 @@ def detectLife(listDir, directory):
 
 		# update progress and display it to the user
 		count += 1
-		bar.update((float(count)/total)*100)
 
 		if I.what(path) != None:
 			# resize the image if its width exceeds 500 pixels
@@ -98,12 +92,13 @@ def detectLife(listDir, directory):
 
 			for cascade in cascades:
 				faces = detection(cascade, imagePath)
-				# we know there is a face, no need to try subsequent cascades
+				# if we know that there is a face, there's no need to try subsequent cascades
 				if faces >= 1:			
-					print "Found a face"
 					faceCount += 1
 					break
+			bar.update((float(count)/total)*100)
 		else:
+			bar.update((float(count)/total)*100)
 			continue
 	bar.finish()
 	print "\nWe have discovered " + str(faceCount) + " humans.\n"

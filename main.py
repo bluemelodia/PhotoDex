@@ -39,6 +39,9 @@ def main():
 	elif sys.argv[2] == 'D':
 		print "Activating clone detection algorithm....\n"
 	elif sys.argv[2] == 'F':
+		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
+			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"
+			sys.exit()
 		print "Commencing search for human life...\n"
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
