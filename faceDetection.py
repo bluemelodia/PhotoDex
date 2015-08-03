@@ -104,7 +104,6 @@ def detectLife(listDir, directory, flag, destDir):
 					break
 			bar.update((float(count)/total)*100)
 		else:
-			print "none"
 			bar.update((float(count)/total)*100)
 			continue
 	bar.finish()

@@ -9,6 +9,7 @@ import sys
 
 import faceDetection
 import shrinkRay
+import colorCode
 
 def main():
 	if len(sys.argv) < 4:
