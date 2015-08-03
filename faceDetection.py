@@ -2,7 +2,7 @@
 
 # To run this protocol, supply an additional fifth argument, Y - show or N - no show
 # This will determine whether the photos are displayed in a window
-# Example: python main.py ../Profile_Pictures F ../Art S
+# Example: python main.py ../iPhone_Photo_Short F ../Sentient_Beings N
 
 from __future__ import division
 from PIL import Image
@@ -21,8 +21,6 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
 
 cascades = []
 showPhotos = None
-
-#TODO: check which xml files are giving the most false positives/negatives, and get rid of them
 
 # detect faces in the provided image
 def detection(cascade, image):
@@ -73,7 +71,7 @@ def cascade():
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_frontalcatface_extended.xml'))
 
-def detectLife(listDir, directory, flag):
+def detectLife(listDir, directory, flag, destDir):
 	# set the display flag
 	global showPhotos
 	showPhotos = flag
@@ -109,11 +107,13 @@ def detectLife(listDir, directory, flag):
 				# if we know that there is a face, there's no need to try subsequent cascades
 				if faces >= 1:			
 					faceCount += 1
+					print destDir + "/" + os.path.basename(imgpath)
+
+					os.rename(imagePath, destDir + "/" + os.path.basename(imgpath))
 					break
 			bar.update((float(count)/total)*100)
 		else:
 			bar.update((float(count)/total)*100)
 			continue
 	bar.finish()
-	print "\nWe have discovered " + str(faceCount) + " humans.\n"
-	#TODO: can do sentient beings instead of humans if you want
+	print "\nWe have discovered " + str(faceCount) + " sentient beings.\n"

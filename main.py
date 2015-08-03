@@ -42,9 +42,9 @@ def main():
 		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
 			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"
 			sys.exit()
-		print "Commencing search for human life...\n"
+		print "Commencing search for sentient life...\n"
 		faceDetection.cascade()
-		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4])
+		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4], sys.argv[3])
 	elif sys.argv[2] == 'S': # reduces the size of photos
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."
