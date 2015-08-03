@@ -10,4 +10,5 @@ Currently supported experimental procedures are outlined below:<br />
     Protocol 'T': Detecting and translating text in photos (coming soon)
     Protocol 'W': Analyzing screenshots of workout machines and generating a report (coming soon)
 
-Note: Due to limitations in face detection algorithms, Protocol 'F' does not have a 100% accuracy rate.
+Research Notes: <br />
+Due to limitations in face detection algorithms, Protocol 'F' does not have a 100% accuracy rate.
