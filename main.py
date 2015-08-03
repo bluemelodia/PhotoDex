@@ -44,7 +44,7 @@ def main():
 			sys.exit()
 		print "Commencing search for human life...\n"
 		faceDetection.cascade()
-		faceDetection.detectLife(Home, sys.argv[1])
+		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4])
 	elif sys.argv[2] == 'S':
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."

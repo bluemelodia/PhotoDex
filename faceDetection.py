@@ -20,6 +20,7 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         SimpleProgress, Timer
 
 cascades = []
+showPhotos = None
 
 #TODO: check which xml files are giving the most false positives/negatives, and get rid of them
 
@@ -48,11 +49,12 @@ def detection(cascade, image):
     		roi_gray = gray[y:y+h, x:x+w]
     		roi_color = img[y:y+h, x:x+w]
 
-    #TODO: don't show this if the user specified 'N'
-	cv2.imshow("Faces", img)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-	return len(faces)
+    	# only show this if the user specified 'Y' as the flag
+    	if (showPhotos == 'Y'):
+			cv2.imshow("Faces", img)
+			cv2.waitKey(0)
+			cv2.destroyAllWindows()
+    	return len(faces)
 
 def cascade():
 	# these files must be in the same directory as faceDetection.py for face detection to succeed
@@ -64,7 +66,11 @@ def cascade():
 	cascades.append(cv2.CascadeClassifier('haarcascade_lowerbody.xml'))
 	cascades.append(cv2.CascadeClassifier('haarcascade_eye.xml'))
 
-def detectLife(listDir, directory):
+def detectLife(listDir, directory, flag):
+	# set the display flag
+	global showPhotos
+	showPhotos = flag
+
 	# step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
 
