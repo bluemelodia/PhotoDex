@@ -37,11 +37,9 @@ def detection(cascade, image):
 	# minNeighbors: # objects that must be detected near the current one before it detects the face
 	faces = cascade.detectMultiScale(
 		gray, 
-		scaleFactor = 1.4, 
-		minNeighbors = 5, 
+		scaleFactor = 1.3, 
+		minNeighbors = 5,
 	)
-
-	#print faces
 
 	# loop over the bounding boxes, draw a rectangle around the faces
 	# where (x, y) is the starting location of the face
@@ -49,9 +47,9 @@ def detection(cascade, image):
 		cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
     		roi_gray = gray[y:y+h, x:x+w]
     		roi_color = img[y:y+h, x:x+w]
-	#cv2.imshow("Faces", img)
-	#cv2.waitKey(0)
-	#cv2.destroyAllWindows()
+	cv2.imshow("Faces", img)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
 	return len(faces)
 
 def cascade():
@@ -61,10 +59,14 @@ def cascade():
 		print "ERROR: Your cascades directory was accidentally pulverised.\n"
 		sys.exit()
 
-	# create the haar cascade and initialize it with our face cascade
-	# each cascade is an XML file that contains the data to detect faces
-	for cascadeFile in cDir:
-		cascades.append(cv2.CascadeClassifier(cascadeFile))
+	# these files must be in the same directory as faceDetection.py for face detection to succeed
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_default.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_profileface.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_upperbody.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_lowerbody.xml'))
+	cascades.append(cv2.CascadeClassifier('haarcascade_eye.xml'))
 
 def detectLife(listDir, directory):
 	# step through all files in directory
@@ -100,7 +102,7 @@ def detectLife(listDir, directory):
 				if faces >= 1:			
 					print "Found a face"
 					faceCount += 1
-					continue
+					break
 		else:
 			continue
 	bar.finish()

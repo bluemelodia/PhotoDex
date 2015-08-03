@@ -1,7 +1,7 @@
 # Created by: Melanie Hsu (bluemelodia)
 
-# A handy ray that will shrink the size of your images
-# If calling through 'R' protocol, supply a size argument to main along with a flag ('H' or 'W')
+# A handy ray that will shrink the size of all images in the provided directory
+# If calling through 'R' protocol, supply a size argument to main along with a flag ('H' for height or 'W' for width)
 # Example:  python main.py ../Profile_Pictures R ../Art 500 W
 
 import cv2
@@ -51,14 +51,14 @@ def shrinkImages(listDir, directory, size, flag):
 	progress = 0
 
 	# initialize the progress bar
-	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=20).start()
+	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
 	for imgpath in listDir:
 		path = directory + "/" + imgpath
 
 		# update progress and display it to the user
 		count += 1
-		bar.update((float(count)/total)*20)
+		bar.update((float(count)/total)*100)
 
 		if I.what(path) != None:
 			imagePath = directory + "/" + imgpath
@@ -68,6 +68,5 @@ def shrinkImages(listDir, directory, size, flag):
 				imagePath = shrinkByHeight(imagePath, int(size))
 		else:
 			continue
-		#TODO: write the shrunk pictures
 	bar.finish()
 	print "\nHoney, I shrunk the directory!\n"

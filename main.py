@@ -42,7 +42,7 @@ def main():
 		print "Commencing search for human life...\n"
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1])
-	elif sys.argv[2] == 'R':
+	elif sys.argv[2] == 'S':
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."
 			print "How small is small?\n"
@@ -57,8 +57,8 @@ def main():
 		print "Please consult the manual for our authorized procedures:"
 		print "\t'C' - Dominant colors sorting protocol"
 		print "\t'D' - Duplicate image sorting protocol"
-		print "\t'F' - Search for human life"
-		print "\t'R' - Shrink ray\n"
+		print "\t'F' - Search for human life - face detection protocol"
+		print "\t'S' - Shrink ray\n"
 		sys.exit()
 
 if __name__ == "__main__": main()
