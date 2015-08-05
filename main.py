@@ -36,12 +36,23 @@ def main():
 		sys.exit()
 
 	if sys.argv[2] == 'C':
-		print "Sorting color protocol activated...\n"
-		colorCode.dominantColors(Home, sys.argv[1], sys.argv[3])
+		if len(sys.argv) < 5:
+			sys.exit("Protocol C requires an extra argument, 'Q' - query directory or 'D' - calculate dominant image histograms\n")
+		if (sys.argv[4] == 'Q'):
+			print "Sorting color protocol activated...\n"
+			colorCode.queryByDominantColor(Home, sys.argv[1], sys.argv[3])
+		elif (sys.argv[4] == 'D'):
+			print "Sorting color protocol activated...\n"
+			colorCode.dominantColors(Home, sys.argv[1], sys.argv[3])
+		else:
+			print "Sorry, that option was blasted into smithereens with most of the dinosaurs...\n"
+			sys.exit()
 	elif sys.argv[2] == 'D':
 		print "Activating clone detection algorithm....\n"
 		#TODO: would probably have to save past histograms
 	elif sys.argv[2] == 'F': # detects the presence of sentient beings (humans and cats)
+		if len(sys.argv) < 5:
+			sys.exit("Protocol F requires an extra argument, 'Y' - show images in new window, 'N' - the opposite of 'Y'\n")
 		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
 			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"
 			sys.exit()
@@ -49,6 +60,8 @@ def main():
 		faceDetection.cascade()
 		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4], sys.argv[3])
 	elif sys.argv[2] == 'S': # reduces the size of photos
+		if len(sys.argv) < 6:
+			sys.exit("Protocol S requires two extra arguments, desired height/width and 'H' or 'W' - shrink by height or width\n")
 		if (sys.argv[4].isdigit() == False):
 			print "You'll have to be more specific about the settings for the shrink ray."
 			print "How small is small?\n"

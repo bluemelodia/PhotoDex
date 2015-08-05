@@ -1,5 +1,15 @@
 # Created by: Melanie Hsu (bluemelodia)
-# example: python main.py ../iPhone_Photo_Short C ../Sentient_Beings
+
+# A class that handles dominant color calculations in an image. There's an option to create
+# and save dominant color bar graphs of all images in a directory - activated by the user 
+# adding D as the last command-line argument:
+# example: python main.py ../iPhone_Photo_Short C ../Sentient_Beings D
+
+# The second option is querying a directory with a single image, which will find all the 
+# images that have similar dominant color schemes. Activated by adding Q as the last argument.
+# Additionally, instead of a directory, the fourth command-line argument must be the relative
+# path to the image you are using to query
+# example: python main.py ../iPhone_Photo_Short C ../cero.png Q
 
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as pyplot 
@@ -49,6 +59,8 @@ def plotColors(hist, centroids):
 	# return the bar chart
 	return bar
 
+# finds and saves a bar image of the most dominant colors in a picture in the destination directory 
+# the dominant color images are saved in the destination directory of the user's choice
 def dominantColors(listDir, directory, destDir):
 	# step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
@@ -100,4 +112,11 @@ def dominantColors(listDir, directory, destDir):
 		else:
 			progress.update((float(count)/total)*100)
 			continue
-	bar.finish()
+	progress.finish()
+
+# query a directory of images for similar images by dominant color graphs
+# for this to work, you must first create a dominant color graph of the desired image
+# and supply it to the program as an extra command-line argument - ideally, this image
+# should not be inside the directory you are attempting to query 
+def queryByDominantColor(imageDir, directory, colorScheme):
+	print "Hi"
