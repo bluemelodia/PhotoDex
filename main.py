@@ -37,6 +37,7 @@ def main():
 
 	if sys.argv[2] == 'C':
 		print "Sorting color protocol activated...\n"
+		colorCode.dominantColors(Home, sys.argv[1], sys.argv[3])
 	elif sys.argv[2] == 'D':
 		print "Activating clone detection algorithm....\n"
 		#TODO: would probably have to save past histograms

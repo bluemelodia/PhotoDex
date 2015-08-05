@@ -70,7 +70,7 @@ def detectLife(listDir, directory, flag, destDir):
 	showPhotos = flag
 
 	# step through all files in directory
-	path, dirs, files = os.walk(sys.argv[1]).next()
+	path, dirs, files = os.walk(directory).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -82,7 +82,7 @@ def detectLife(listDir, directory, flag, destDir):
 	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
 	for imgpath in listDir:
-		path = sys.argv[1] + "/" + imgpath
+		path = directory + "/" + imgpath
 
 		# update progress and display it to the user
 		count += 1
