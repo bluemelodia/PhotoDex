@@ -69,7 +69,6 @@ def dominantColors(listDir, directory, destDir):
 	total = len(files)
 	count = 0
 	progress = 0
-	faceCount = 0 # number of photos that contain faces
 
 	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
@@ -115,8 +114,70 @@ def dominantColors(listDir, directory, destDir):
 	progress.finish()
 
 # query a directory of images for similar images by dominant color graphs
-# for this to work, you must first create a dominant color graph of the desired image
-# and supply it to the program as an extra command-line argument - ideally, this image
-# should not be inside the directory you are attempting to query 
-def queryByDominantColor(imageDir, directory, colorScheme):
-	print "Hi"
+# for this to work, you must first supply the query image as a commmand-line argument
+def queryByDominantColor(imageDir, directory, queryImage):
+	# necessary check to see if the image can be used to query
+	queryPath = os.path.abspath(queryImage)
+
+	if I.what(queryPath) == None:
+		sys.exit("Your image is unfailingly corrupted!")
+
+	# make a bar graph of the image to query
+	print queryPath
+	queryImg = cv2.imread(queryPath)
+	queryImg = cv2.cvtColor(queryImg, cv2.COLOR_BGR2RGB)
+	queryImg = queryImg.reshape((queryImg.shape[0]*queryImg.shape[1], 3))
+	qCluster = KMeans(5)
+	qCluster.fit(queryImg)
+	qHist = centroidHist(qCluster)
+	qBar = plotColors(qHist, qCluster.cluster_centers_)
+	pyplot.figure()
+	pyplot.axis("off")
+	pyplot.imshow(qBar)
+	pyplot.show()
+
+	# step through all files in directory
+	path, dirs, files = os.walk(sys.argv[1]).next()
+
+	# initialize the progress variables
+	total = len(files)
+	count = 0
+	progress = 0
+
+	# initialize the progress bar
+	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
+	for imgpath in imageDir:
+		path = directory + "/" + imgpath
+
+		# update progress and display it to the user
+		count += 1	
+
+		if I.what(path) != None:
+			imagePath = directory + "/" + imgpath
+
+			# load the image nand convert it from BGR to RGB, enabling display with matplotlib
+			image = cv2.imread(imagePath)
+			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+			# reshape the NumPy array to a list of RGB pixels
+			# img.shape returns a tuple with number of rows, columns, and channels (if in color)
+			image = image.reshape((image.shape[0]*image.shape[1], 3))
+
+			# cluster the pixel intensities 
+			cluster = KMeans(5)
+			cluster.fit(image)
+
+			# build a histogram of clusters, then draw a bar graph 
+			# depicting the most dominant colors in the image
+			hist = centroidHist(cluster)
+			bar = plotColors(hist, cluster.cluster_centers_)
+
+			# compare the query image to this image
+
+			progress.update((float(count)/total)*100)
+		else:
+			progress.update((float(count)/total)*100)
+			continue
+	progress.finish()
+

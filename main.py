@@ -29,7 +29,8 @@ def main():
 		sys.exit()
 
 	try:
-		Dest = os.listdir(sys.argv[3])
+		if not (sys.argv[2] == 'C' and len(sys.argv) == 5 and sys.argv[4] == 'Q'):
+			Dest = os.listdir(sys.argv[3])
 	except:
 		print "ALERT: Your destination directory has fled the premises!"
 		print "We shall wait patiently while you attempt to recapture it.\n"
