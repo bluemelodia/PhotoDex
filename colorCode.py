@@ -4,6 +4,7 @@
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as pyplot 
 import numpy as np
+import scipy
 import argparse
 import cv2
 import os
@@ -88,10 +89,12 @@ def dominantColors(listDir, directory, destDir):
 			bar = plotColors(hist, cluster.cluster_centers_)
 
 			# show image
-			pyplot.figure()
-			pyplot.axis("off")
-			pyplot.imshow(bar)
-			pyplot.show()
+			#pyplot.figure()
+			#pyplot.axis("off")
+			#pyplot.imshow(bar)
+			#pyplot.show()
+			
+			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + imgpath)
 
 			progress.update((float(count)/total)*100)
 		else:
