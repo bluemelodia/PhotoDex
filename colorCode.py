@@ -74,28 +74,18 @@ def dominantColors(listDir, directory, destDir):
 			image = cv2.imread(imagePath)
 			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-			# show image
-			pyplot.figure()
-			pyplot.axis("off")
-			pyplot.imshow(image)
-			pyplot.show()
-
 			# reshape the NumPy array to a list of RGB pixels
 			# img.shape returns a tuple with number of rows, columns, and channels (if in color)
 			image = image.reshape((image.shape[0]*image.shape[1], 3))
-			print "reshaped"
 
 			# cluster the pixel intensities 
 			cluster = KMeans(5)
 			cluster.fit(image)
-			print "made clusters"
 
 			# build a histogram of clusters, then draw a bar graph 
 			# depicting the most dominant colors in the image
 			hist = centroidHist(cluster)
-			print "made histogram"
 			bar = plotColors(hist, cluster.cluster_centers_)
-			print "made bar"
 
 			# show image
 			pyplot.figure()
