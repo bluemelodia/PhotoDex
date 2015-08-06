@@ -9,9 +9,10 @@
 # images that have similar dominant color schemes. Activated by adding Q as the last argument.
 # Additionally, instead of a directory, the fourth command-line argument must be the relative
 # path to the image you are using to query
-# example: python main.py ../iPhone_Photo_Short C ../cero.png Q
+# example: python main.py ../iPhone_Photo_Short C ../cero.jpg Q
 
 from sklearn.cluster import KMeans
+#from skimage.measure import structural_similarity as ssim
 import matplotlib.pyplot as pyplot 
 import numpy as np
 import scipy
@@ -19,6 +20,7 @@ import argparse
 import cv2
 import os
 import sys
+import operator
 from PIL import Image
 import imghdr as I
 
@@ -58,6 +60,23 @@ def plotColors(hist, centroids):
 
 	# return the bar chart
 	return bar
+
+# Calculate Mean Square Error between two images (the sum of the square difference between two images)
+# The lower the error, the higher the image similarity
+def meanSquareError(A, B):
+	# converting to float prevents wrapping
+	# subtract the pixels intensities of B from A
+	error = np.sum((A.astype("float")-B.astype("float"))**2) 
+	error /= float(A.shape[0] * A.shape[1]) # divide sum by number of pixels in the image
+	return error
+
+def chi2_distance(histA, histB, eps = 1e-10):
+	# compute the chi-squared distance
+	d = 0.5 * np.sum([((a - b) ** 2) / (a + b + eps)
+		for (a, b) in zip(histA, histB)])
+
+	# return the chi-squared distance
+	return d
 
 # finds and saves a bar image of the most dominant colors in a picture in the destination directory 
 # the dominant color images are saved in the destination directory of the user's choice
@@ -131,10 +150,10 @@ def queryByDominantColor(imageDir, directory, queryImage):
 	qCluster.fit(queryImg)
 	qHist = centroidHist(qCluster)
 	qBar = plotColors(qHist, qCluster.cluster_centers_)
-	pyplot.figure()
-	pyplot.axis("off")
-	pyplot.imshow(qBar)
-	pyplot.show()
+	#pyplot.figure()
+	#pyplot.axis("off")
+	#pyplot.imshow(qBar)
+	#pyplot.show()
 
 	# step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
@@ -146,6 +165,9 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
+	# store the distance
+	differences = {}
 
 	for imgpath in imageDir:
 		path = directory + "/" + imgpath
@@ -172,12 +194,35 @@ def queryByDominantColor(imageDir, directory, queryImage):
 			# depicting the most dominant colors in the image
 			hist = centroidHist(cluster)
 			bar = plotColors(hist, cluster.cluster_centers_)
+			#pyplot.figure()
+			#pyplot.axis("off")
+			#pyplot.imshow(bar)
+			#pyplot.show()
 
 			# compare the query image to this image
+			diff = meanSquareError(qBar, bar)
+			#print diff
+			differences[int(diff)] = imagePath
+
+			diff2 = chi2_distance(qBar, bar)
+			#print diff2
+			#print differences
 
 			progress.update((float(count)/total)*100)
 		else:
 			progress.update((float(count)/total)*100)
 			continue
 	progress.finish()
+	print "Finished image simlarity calculations.\n"
+
+	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
+	print sorted_dictionary
+
+	print "Generating rankings...\n"
+
+	
+
+
+
+
 
