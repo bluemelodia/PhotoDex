@@ -141,6 +141,24 @@ def rnd(x):
 	base = 32
 	return int(base*math.floor(float(x)/base))/base
 
+#calculate the L1_Norm between a pair of images
+#0.0 - perfect similarity
+def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
+	sum = Awidth*Aheight + Bwidth*Bheight
+	distance = 0
+
+	for i in range(0, 8):
+		for j in range(0, 8):
+			for k in range(0, 8):
+				if i == 0 and j == 0 and k == 0:
+					if math.fabs(A[0,0,0] - B[0,0,0]) < 100:
+						sum -= A[0,0,0]
+						sum -= B[0,0,0]
+						continue
+				distance += math.fabs(A[i,j,k] - B[i,j,k])
+	norm = distance/sum
+	return norm
+
 # query a directory of images for similar images by dominant color graphs
 # for this to work, you must first supply the query image as a commmand-line argument
 def queryByDominantColor(imageDir, directory, queryImage):
@@ -202,15 +220,16 @@ def queryByDominantColor(imageDir, directory, queryImage):
 					for k in range(0, 8):
 						otherHist[(i, j, k)] = 0
 
-			width, height = otherImg.size
-			for i in range(0, width):
-				for j in range(0, height):
+			otherWidth, otherHeight = otherImg.size
+			for i in range(0, otherWidth):
+				for j in range(0, otherHeight):
 					pixel = pix[i, j]
 					blue = rnd(pixel[0])
 					green = rnd(pixel[1])
 					red = rnd(pixel[2])
 					otherHist[(blue, green, red)] += 1
-					
+			norm = round(L1norm(hist, otherHist, width, height, otherWidth, otherHeight), 5)
+			differences[norm] = imagePath
 			progress.update((float(count)/total)*100)
 		else:
 			progress.update((float(count)/total)*100)
