@@ -29,6 +29,8 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
 
+size = 100, 100
+
 # count the number of pixels belonging to each cluster
 def centroidHist(clt):
 	# grab number of clusters; this function returns evenly spaced values within the given interval
@@ -168,6 +170,7 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 	# store the distance
 	differences = {}
+	differences[0] = queryPath
 
 	for imgpath in imageDir:
 		path = directory + "/" + imgpath
@@ -201,28 +204,41 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 			# compare the query image to this image
 			diff = meanSquareError(qBar, bar)
-			#print diff
 			differences[int(diff)] = imagePath
-
 			diff2 = chi2_distance(qBar, bar)
-			#print diff2
-			#print differences
 
 			progress.update((float(count)/total)*100)
 		else:
 			progress.update((float(count)/total)*100)
 			continue
 	progress.finish()
-	print "Finished image simlarity calculations.\n"
+	print "Finished image similarity calculations.\n"
 
 	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
 	print sorted_dictionary
 
 	print "Generating rankings...\n"
 
-	
+	#rankings = pyplot.figure("Ranks")
 
+	for (i, (value, image)) in enumerate(sorted_dictionary):
+		image = cv2.imread(image)
+		cv2.imshow("Faces", image)
+		cv2.waitKey(0)
+		cv2.destroyAllWindows()
 
+	# initialize a figure
+	#rankings = pyplot.figure("Ranks")
 
+	# loop over the images
+	"""for (i, (value, image)) in enumerate(sorted_dictionary):
+		image = Image.open(image)
+		graph = rankings.add_subplot(total, total, i+1)
+		graph.set_title("")
+		if image == None or image.size == 0:
+			print "Image is empty"
+		pyplot.imshow(image, cmap = pyplot.cm.gray)
+		pyplot.axis("off")
 
-
+	# show the figure
+	pyplot.show()"""
