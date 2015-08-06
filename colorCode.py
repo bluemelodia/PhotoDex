@@ -14,6 +14,8 @@
 from sklearn.cluster import KMeans
 #from skimage.measure import structural_similarity as ssim
 import matplotlib.pyplot as pyplot 
+import math
+import random
 import numpy as np
 import scipy
 import argparse
@@ -134,6 +136,11 @@ def dominantColors(listDir, directory, destDir):
 			continue
 	progress.finish()
 
+# round each pixel value so it fits into one of the bins
+def rnd(x):
+	base = 32
+	return int(base*math.floor(float(x)/base))/base
+
 # query a directory of images for similar images by dominant color graphs
 # for this to work, you must first supply the query image as a commmand-line argument
 def queryByDominantColor(imageDir, directory, queryImage):
@@ -142,20 +149,6 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 	if I.what(queryPath) == None:
 		sys.exit("Your image is unfailingly corrupted!")
-
-	# make a bar graph of the image to query
-	print queryPath
-	queryImg = cv2.imread(queryPath)
-	queryImg = cv2.cvtColor(queryImg, cv2.COLOR_BGR2RGB)
-	queryImg = queryImg.reshape((queryImg.shape[0]*queryImg.shape[1], 3))
-	qCluster = KMeans(5)
-	qCluster.fit(queryImg)
-	qHist = centroidHist(qCluster)
-	qBar = plotColors(qHist, qCluster.cluster_centers_)
-	#pyplot.figure()
-	#pyplot.axis("off")
-	#pyplot.imshow(qBar)
-	#pyplot.show()
 
 	# step through all files in directory
 	path, dirs, files = os.walk(sys.argv[1]).next()
@@ -172,6 +165,26 @@ def queryByDominantColor(imageDir, directory, queryImage):
 	differences = {}
 	differences[0] = queryPath
 
+	# make a histogram
+	hist = {}
+	queryImg = Image.open(queryImage)
+	pix = queryImg.load()
+
+	for i in range(0, 8):
+		for j in range(0, 8):
+			for k in range(0, 8):
+				hist[(i, j, k)] = 0
+
+	width, height = queryImg.size
+	for i in range(0, width):
+		for j in range(0, height):
+			pixel = pix[i, j]
+			blue = rnd(pixel[0])
+			green = rnd(pixel[1])
+			red = rnd(pixel[2])
+			hist[(blue, green, red)] += 1
+	print hist
+
 	for imgpath in imageDir:
 		path = directory + "/" + imgpath
 
@@ -184,28 +197,6 @@ def queryByDominantColor(imageDir, directory, queryImage):
 			# load the image nand convert it from BGR to RGB, enabling display with matplotlib
 			image = cv2.imread(imagePath)
 			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-			# reshape the NumPy array to a list of RGB pixels
-			# img.shape returns a tuple with number of rows, columns, and channels (if in color)
-			image = image.reshape((image.shape[0]*image.shape[1], 3))
-
-			# cluster the pixel intensities 
-			cluster = KMeans(5)
-			cluster.fit(image)
-
-			# build a histogram of clusters, then draw a bar graph 
-			# depicting the most dominant colors in the image
-			hist = centroidHist(cluster)
-			bar = plotColors(hist, cluster.cluster_centers_)
-			#pyplot.figure()
-			#pyplot.axis("off")
-			#pyplot.imshow(bar)
-			#pyplot.show()
-
-			# compare the query image to this image
-			diff = meanSquareError(queryImg, image)
-			diff2 = chi2_distance(queryImg, image)
-			differences[int(diff2)] = imagePath
 
 			progress.update((float(count)/total)*100)
 		else:
