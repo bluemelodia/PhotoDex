@@ -183,7 +183,6 @@ def queryByDominantColor(imageDir, directory, queryImage):
 			green = rnd(pixel[1])
 			red = rnd(pixel[2])
 			hist[(blue, green, red)] += 1
-	print hist
 
 	for imgpath in imageDir:
 		path = directory + "/" + imgpath
@@ -194,10 +193,24 @@ def queryByDominantColor(imageDir, directory, queryImage):
 		if I.what(path) != None:
 			imagePath = directory + "/" + imgpath
 
-			# load the image nand convert it from BGR to RGB, enabling display with matplotlib
-			image = cv2.imread(imagePath)
-			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+			otherHist = {}
+			otherImg = Image.open(imagePath)
+			pix = otherImg.load()
 
+			for i in range(0, 8):
+				for j in range(0, 8):
+					for k in range(0, 8):
+						otherHist[(i, j, k)] = 0
+
+			width, height = otherImg.size
+			for i in range(0, width):
+				for j in range(0, height):
+					pixel = pix[i, j]
+					blue = rnd(pixel[0])
+					green = rnd(pixel[1])
+					red = rnd(pixel[2])
+					otherHist[(blue, green, red)] += 1
+					
 			progress.update((float(count)/total)*100)
 		else:
 			progress.update((float(count)/total)*100)
