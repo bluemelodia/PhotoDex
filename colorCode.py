@@ -203,9 +203,9 @@ def queryByDominantColor(imageDir, directory, queryImage):
 			#pyplot.show()
 
 			# compare the query image to this image
-			diff = meanSquareError(qBar, bar)
-			differences[int(diff)] = imagePath
-			diff2 = chi2_distance(qBar, bar)
+			diff = meanSquareError(queryImg, image)
+			diff2 = chi2_distance(queryImg, image)
+			differences[int(diff2)] = imagePath
 
 			progress.update((float(count)/total)*100)
 		else:
@@ -219,26 +219,8 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 	print "Generating rankings...\n"
 
-	#rankings = pyplot.figure("Ranks")
-
 	for (i, (value, image)) in enumerate(sorted_dictionary):
 		image = cv2.imread(image)
 		cv2.imshow("Faces", image)
 		cv2.waitKey(0)
 		cv2.destroyAllWindows()
-
-	# initialize a figure
-	#rankings = pyplot.figure("Ranks")
-
-	# loop over the images
-	"""for (i, (value, image)) in enumerate(sorted_dictionary):
-		image = Image.open(image)
-		graph = rankings.add_subplot(total, total, i+1)
-		graph.set_title("")
-		if image == None or image.size == 0:
-			print "Image is empty"
-		pyplot.imshow(image, cmap = pyplot.cm.gray)
-		pyplot.axis("off")
-
-	# show the figure
-	pyplot.show()"""
