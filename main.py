@@ -32,14 +32,16 @@ def main():
 		print "An angry octopus has dragged your destination to the bottom of the sea! Such misfortune!\n"
 		sys.exit()
 
-	Protocol = raw_input("Protocol: ")
-	print "Authorized Procedures: \n"
+	print "\nChoose Your Illegal Experiment!\n"
+	print "Available Procedures: \n"
 	print "\t'C' - Dominant colors sorting protocol"
 	print "\t'D' - Duplicate image sorting protocol"
 	print "\t'F' - Search for human life - face detection protocol"
 	print "\t'S' - Shrink ray"
 	print "\t'T' - Text recognition and retrieval protocol"
 	print "\t'W' - Generate fitness training report"
+	Protocol = raw_input("I choose: ")
+
 
 	if Protocol == 'C':
 		if len(sys.argv) < 5:
@@ -81,7 +83,7 @@ def main():
 		print "Improving human understanding...\n"
 	elif Protocol == 'W': # creates a report based on workout screenshots
 		print "Generating training reports...\n"
-		
+
 	print "- - - - - Thank you for visiting PhotoDex Laboratory - - - - -\n"
 
 if __name__ == "__main__": main()
