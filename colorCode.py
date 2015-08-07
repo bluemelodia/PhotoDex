@@ -263,8 +263,8 @@ def queryByColor(imageDir, directory, queryImage):
 	print "\n\nImage stitching complete!\n"
 
 	bigImage.show()
-	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15.\n"
-	print len(sorted_dictionary)
+	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15."
+	print "Legal photo numbers range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
 	var = raw_input("List:")
 	print ("You chose to move: " + var)
 	splits = var.split(",", 1) # split string by commans
@@ -280,17 +280,24 @@ def queryByColor(imageDir, directory, queryImage):
 				temp = dashed[1]
 				dashed[1] = dashed[0]
 				dashed[0] = temp
+			if int(dashed[0]) < 1:
+				sys.exit("Unreachable! One or more of the numbers you specified is out of range.")
+			if int(dashed[1]) >= len(sorted_dictionary):
+				print str(int(dashed[1])) + " is too great for our comprehension. Truncating to max acceptable number...\n"
+				dashed[1] = len(sorted_dictionary)-1
 			print "Start: " + str(dashed[0])
 			print "End: " + str(dashed[1])
-			if int(dashed[0]) < 1 or int(dashed[1]) >= len(sorted_dictionary):
-				sys.exit("Unreachable! One or more of the numbers you specified is out of range.")
 			"""for j in range(len(dashed)): #add every number in range
 				dashed[j] = dashed[j].replace(" ", "")
 				print dashed[j]
 				move.append(dashed[j])"""
 		else:
-			if (splits[i].isdigit()):
-				move.append(splits[i])
+			if not splits[i].isdigit():
+				continue
+			if int(splits[i]) < 1 or int(splits[i]) >= len(sorted_dictionary):
+				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
+				continue
+			move.append(splits[i])
 	print move
 
 	#TODO: let users pick which images to move
