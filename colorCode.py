@@ -232,20 +232,24 @@ def queryByColor(imageDir, directory, queryImage):
 			progress.update((float(count)/total)*100)
 			continue
 	progress.finish()
-	print "Finished image similarity calculations.\n"
+	print "\nFinished image similarity calculations.\n"
 
+	# sort the images from most to least similar to query
 	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
-	print sorted_dictionary
 
 	print "Generating rankings...\n"
 
-	# concatenate images, resize all first
+	# initialize the second progress bar
+	progressTwo = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+	counting = 0
+
+	# resize images, then concatenate them into one large image, labeling them by number
     	font = ImageFont.load_default()
     	bigImage = Image.new('RGB', (100*(validPics), 100))
     	draw = ImageDraw.Draw(bigImage)
 
     	for (i, (value, image)) in enumerate(sorted_dictionary):
-		print "HI"
+    		counting += 1
 		basewidth = 100
 		img = Image.open(image)
 		wpercent = (basewidth / float(img.size[0]))
@@ -253,7 +257,8 @@ def queryByColor(imageDir, directory, queryImage):
 		resizedImg = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
     		bigImage.paste(resizedImg, (100*i, 0))
     		draw.text((100*i, 0), str(i), (255, 255, 255), font=font)
+    		progressTwo.update((float(counting)/validPics)*100)
     	bigImage.save("rankings.jpg")
-
+	print "\n\nImage stitching complete!\n"
 	#TODO: let users pick which images to move
 
