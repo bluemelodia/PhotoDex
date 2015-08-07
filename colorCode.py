@@ -240,7 +240,7 @@ def queryByColor(imageDir, directory, queryImage):
 	print "Generating rankings...\n"
 
 	# concatenate images, resize all first
-    	#font = ImageFont.truetype("MouseMemoirs-Regular.ttf", 25)
+    	font = ImageFont.load_default()
     	bigImage = Image.new('RGB', (100*(validPics), 100))
     	draw = ImageDraw.Draw(bigImage)
 
@@ -252,6 +252,7 @@ def queryByColor(imageDir, directory, queryImage):
 		hsize = int((float(img.size[1]) * float(wpercent)))
 		resizedImg = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
     		bigImage.paste(resizedImg, (100*i, 0))
+    		draw.text((100*i, 0), str(i), (255, 255, 255), font=font)
     	bigImage.save("rankings.jpg")
 
 	#TODO: let users pick which images to move
