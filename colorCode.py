@@ -34,8 +34,6 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
 
-width = 100
-
 # count the number of pixels belonging to each cluster
 def centroidHist(clt):
 	# grab number of clusters; this function returns evenly spaced values within the given interval
@@ -199,6 +197,7 @@ def queryByColor(imageDir, directory, queryImage):
 			red = rnd(pixel[2])
 			hist[(blue, green, red)] += 1
 
+	validPics = 1
 	for imgpath in imageDir:
 		path = directory + "/" + imgpath
 
@@ -206,6 +205,7 @@ def queryByColor(imageDir, directory, queryImage):
 		count += 1	
 
 		if I.what(path) != None:
+			validPics += 1
 			imagePath = directory + "/" + imgpath
 
 			otherHist = {}
@@ -239,23 +239,20 @@ def queryByColor(imageDir, directory, queryImage):
 
 	print "Generating rankings...\n"
 
-	"""for (i, (value, image)) in enumerate(sorted_dictionary):
-		image = cv2.imread(image)
-		cv2.imshow("Faces", image)
-		cv2.waitKey(0)
-		cv2.destroyAllWindows()"""
-
-		# concatenate images, resize all first
+	# concatenate images, resize all first
     	#font = ImageFont.truetype("MouseMemoirs-Regular.ttf", 25)
-    	bigImage = Image.new('RGB', (100*(total+1), 100))
+    	bigImage = Image.new('RGB', (100*(validPics), 100))
     	draw = ImageDraw.Draw(bigImage)
 
     	for (i, (value, image)) in enumerate(sorted_dictionary):
 		print "HI"
+		basewidth = 100
 		img = Image.open(image)
-		resizedImg = img.thumbnail(size,Image.ANTIALIAS)
+		wpercent = (basewidth / float(img.size[0]))
+		hsize = int((float(img.size[1]) * float(wpercent)))
+		resizedImg = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
     		bigImage.paste(resizedImg, (100*i, 0))
-    		bigImage.save("rankings.jpg")
+    	bigImage.save("rankings.jpg")
 
 	#TODO: let users pick which images to move
 
