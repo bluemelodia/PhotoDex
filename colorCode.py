@@ -275,6 +275,9 @@ def queryByColor(imageDir, directory, queryImage):
 			if not (dashed[0].isdigit() and dashed[1].isdigit()):
 				continue
 			if int(dashed[0]) > int(dashed[1]):
+				temp = dashed[1]
+				dashed[1] = dashed[0]
+				dashed[0] = temp
 				print str(int(dashed[0])) + ">" + str(int(dashed[1]))
 			else:
 				print str(int(dashed[0])) +  "<" + str(int(dashed[1]))
