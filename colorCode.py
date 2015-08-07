@@ -269,17 +269,22 @@ def queryByColor(imageDir, directory, queryImage):
 	splits = var.split(",", 1) # split string by commans
 	move = []
 	for i in range(len(splits)):
-		splits[i] = splits[i].replace(" ", "")
-		print splits[i]
-		# if not an int, continue, also get rid of spaces - remove all non-numerical
+		splits[i] = splits[i].replace(" ", "") # replace spaces in string
 		if "-" in splits[i]:
 			dashed = splits[i].split("-", 1)
-			for j in range(len(dashed)): #add every number in range
+			if not (dashed[0].isdigit() and dashed[1].isdigit()):
+				continue
+			if int(dashed[0]) > int(dashed[1]):
+				print str(int(dashed[0])) + ">" + str(int(dashed[1]))
+			else:
+				print str(int(dashed[0])) +  "<" + str(int(dashed[1]))
+			"""for j in range(len(dashed)): #add every number in range
 				dashed[j] = dashed[j].replace(" ", "")
 				print dashed[j]
-				move.append(dashed[j])
+				move.append(dashed[j])"""
 		else:
-			move.append(splits[i])
+			if (splits[i].isdigit()):
+				move.append(splits[i])
 	print move
 
 	#TODO: let users pick which images to move
