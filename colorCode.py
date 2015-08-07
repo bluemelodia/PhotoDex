@@ -302,4 +302,8 @@ def queryByColor(imageDir, directory, queryImage):
 			move.append(splits[i])
 	print "Images with these numbers will be 'politely' asked to relocate: " + str(move) + ".\n"
 
+	dest = raw_input("Specify relative path to destination:")
+	print "Final Destination: " + dest + "\n"
+
+	#TODO: can alter entire console to supply all command-line arguments
 
