@@ -40,10 +40,10 @@ def main():
 		if len(sys.argv) < 5:
 			sys.exit("Protocol C requires an extra argument, 'Q' - query directory or 'D' - calculate dominant image histograms\n")
 		if (sys.argv[4] == 'Q'):
-			print "Sorting color protocol activated...\n"
-			colorCode.queryByDominantColor(Home, sys.argv[1], sys.argv[3])
+			print "Color query protocol activated...\n"
+			colorCode.queryByColor(Home, sys.argv[1], sys.argv[3])
 		elif (sys.argv[4] == 'D'):
-			print "Sorting color protocol activated...\n"
+			print "Dominant colors protocol activated...\n"
 			colorCode.dominantColors(Home, sys.argv[1], sys.argv[3])
 		else:
 			print "Sorry, that option was blasted into smithereens with most of the dinosaurs...\n"

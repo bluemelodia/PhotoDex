@@ -9,7 +9,7 @@
 # images that have similar dominant color schemes. Activated by adding Q as the last argument.
 # Additionally, instead of a directory, the fourth command-line argument must be the relative
 # path to the image you are using to query
-# example: python main.py ../iPhone_Photo_Short C ../cero.jpg Q
+# example: python main.py ../iPhone_Photo_Short C ../cero.png Q
 
 from sklearn.cluster import KMeans
 #from skimage.measure import structural_similarity as ssim
@@ -23,7 +23,10 @@ import cv2
 import os
 import sys
 import operator
+import PIL
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 import imghdr as I
 
 from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
@@ -31,7 +34,7 @@ from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
                         ProgressBar, ReverseBar, RotatingMarker, \
                         SimpleProgress, Timer
 
-size = 100, 100
+width = 100
 
 # count the number of pixels belonging to each cluster
 def centroidHist(clt):
@@ -121,12 +124,6 @@ def dominantColors(listDir, directory, destDir):
 			# depicting the most dominant colors in the image
 			hist = centroidHist(cluster)
 			bar = plotColors(hist, cluster.cluster_centers_)
-
-			# show image
-			#pyplot.figure()
-			#pyplot.axis("off")
-			#pyplot.imshow(bar)
-			#pyplot.show()
 			
 			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + imgpath)
 
@@ -159,9 +156,9 @@ def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
 	norm = distance/sum
 	return norm
 
-# query a directory of images for similar images by dominant color graphs
+# query a directory of images for images that are similar in color
 # for this to work, you must first supply the query image as a commmand-line argument
-def queryByDominantColor(imageDir, directory, queryImage):
+def queryByColor(imageDir, directory, queryImage):
 	# necessary check to see if the image can be used to query
 	queryPath = os.path.abspath(queryImage)
 
@@ -242,8 +239,23 @@ def queryByDominantColor(imageDir, directory, queryImage):
 
 	print "Generating rankings...\n"
 
-	for (i, (value, image)) in enumerate(sorted_dictionary):
+	"""for (i, (value, image)) in enumerate(sorted_dictionary):
 		image = cv2.imread(image)
 		cv2.imshow("Faces", image)
 		cv2.waitKey(0)
-		cv2.destroyAllWindows()
+		cv2.destroyAllWindows()"""
+
+		# concatenate images, resize all first
+    	#font = ImageFont.truetype("MouseMemoirs-Regular.ttf", 25)
+    	bigImage = Image.new('RGB', (100*(total+1), 100))
+    	draw = ImageDraw.Draw(bigImage)
+
+    	for (i, (value, image)) in enumerate(sorted_dictionary):
+		print "HI"
+		img = Image.open(image)
+		resizedImg = img.thumbnail(size,Image.ANTIALIAS)
+    		bigImage.paste(resizedImg, (100*i, 0))
+    		bigImage.save("rankings.jpg")
+
+	#TODO: let users pick which images to move
+
