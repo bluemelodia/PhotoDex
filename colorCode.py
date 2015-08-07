@@ -288,10 +288,9 @@ def queryByColor(imageDir, directory, queryImage):
 				dashed[1] = len(sorted_dictionary)-1
 			print "Start: " + str(dashed[0])
 			print "End: " + str(dashed[1])
-			"""for j in range(len(dashed)): #add every number in range
-				dashed[j] = dashed[j].replace(" ", "")
-				print dashed[j]
-				move.append(dashed[j])"""
+			for j in range(int(dashed[0]), int(dashed[1])):
+				move.append(j)
+			move.append(dashed[1])
 		else:
 			if not splits[i].isdigit():
 				continue
