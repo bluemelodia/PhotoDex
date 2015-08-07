@@ -3,8 +3,12 @@
 We are a mostly ethical laboratory that specializes in manipulating and mutating directories of photos.<br />
 Currently supported experimental procedures are outlined below:<br />
     
-    Protocol 'C': Generating bar graphs of the n (n <= 10) dominant colors in images and storing
-        a record of the dominant color graphs in a user-specified directory.
+    Protocol 'C': 
+        Sub-Protocol 'D': Generating bar graphs of the n (n <= 10) dominant colors in images and storing
+            a record of the dominant color graphs in a user-specified directory. 
+        Sub-Protocol 'Q': Search an directory and rank its images by color similarity to a user-specified
+            query image. The ranked images are displayed to the user, who is given the option to specify
+            which images they would like to move to a specified destination directory.
     Protocol 'D': Deleting or relocating duplicate or near-duplicate images (coming soon)
     Protocol 'F': Detecting humans and relocating photos that feature them as the subject matter.
     Protocol 'S': Shrinking photos according to a specified height or width. A photo expansion option 
