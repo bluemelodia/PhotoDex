@@ -260,5 +260,9 @@ def queryByColor(imageDir, directory, queryImage):
     		progressTwo.update((float(counting)/validPics)*100)
     	bigImage.save("rankings.jpg")
 	print "\n\nImage stitching complete!\n"
+
+	bigImage.show()
+	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15.\n"
+	var = raw_input("List:")
 	#TODO: let users pick which images to move
 
