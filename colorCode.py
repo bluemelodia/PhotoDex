@@ -260,11 +260,13 @@ def queryByColor(imageDir, directory, queryImage):
     		draw.text((100*i, 0), str(i), (255, 255, 255), font=font)
     		progressTwo.update((float(counting)/validPics)*100)
     	bigImage.save("rankings.jpg")
-	print "\n\nImage stitching complete!\n"
+	print "\n\nImage stitching complete! 0 = query image, from L->R = most to least similar to query image\n"
 
 	bigImage.show()
-	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15."
-	print "Legal photo numbers range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
+
+	# Allow users to specify numbers and ranges corresponding to what they want to move
+	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
+	print "Legal photo numbers for your directory range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
 	var = raw_input("List:")
 	print ("You chose to move: " + var + "\n")
 	splits = var.split(",", 1) # split string by commans
@@ -298,7 +300,6 @@ def queryByColor(imageDir, directory, queryImage):
 				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
 				continue
 			move.append(splits[i])
-	print move
+	print "Images with these numbers will be 'politely' asked to relocate: " + str(move) + ".\n"
 
-	#TODO: let users pick which images to move
 

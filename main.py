@@ -82,9 +82,10 @@ def main():
 		print "\t'C' - Dominant colors sorting protocol"
 		print "\t'D' - Duplicate image sorting protocol"
 		print "\t'F' - Search for human life - face detection protocol"
-		print "\t'S' - Shrink ray\n"
-		print "\t'T' - Text recognition and retrieval protocol\n"
+		print "\t'S' - Shrink ray"
+		print "\t'T' - Text recognition and retrieval protocol"
 		print "\t'W' - Generate fitness training report"
 		sys.exit()
+	print "- - - - - Thank you for visiting PhotoDex Laboratory - - - - -\n"
 
 if __name__ == "__main__": main()
