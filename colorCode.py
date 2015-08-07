@@ -266,7 +266,7 @@ def queryByColor(imageDir, directory, queryImage):
 	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15."
 	print "Legal photo numbers range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
 	var = raw_input("List:")
-	print ("You chose to move: " + var)
+	print ("You chose to move: " + var + "\n")
 	splits = var.split(",", 1) # split string by commans
 	move = []
 
@@ -281,9 +281,10 @@ def queryByColor(imageDir, directory, queryImage):
 				dashed[1] = dashed[0]
 				dashed[0] = temp
 			if int(dashed[0]) < 1:
-				sys.exit("Unreachable! One or more of the numbers you specified is out of range.")
+				print str(int(dashed[0])) + " is too puny for our instruments to detect. Raising to min acceptable number...\n"				
+				dashed[0] = 1
 			if int(dashed[1]) >= len(sorted_dictionary):
-				print str(int(dashed[1])) + " is too great for our comprehension. Truncating to max acceptable number...\n"
+				print str(int(dashed[1])) + " is beyond our comprehension. Truncating to max acceptable number...\n"
 				dashed[1] = len(sorted_dictionary)-1
 			print "Start: " + str(dashed[0])
 			print "End: " + str(dashed[1])
