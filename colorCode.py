@@ -24,6 +24,7 @@ import os
 import sys
 import operator
 import PIL
+import re
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -268,11 +269,14 @@ def queryByColor(imageDir, directory, queryImage):
 	splits = var.split(",", 1) # split string by commans
 	move = []
 	for i in range(len(splits)):
+		splits[i] = splits[i].replace(" ", "")
 		print splits[i]
 		# if not an int, continue, also get rid of spaces - remove all non-numerical
 		if "-" in splits[i]:
 			dashed = splits[i].split("-", 1)
-			for j in range(len(dashed)):
+			for j in range(len(dashed)): #add every number in range
+				dashed[j] = dashed[j].replace(" ", "")
+				print dashed[j]
 				move.append(dashed[j])
 		else:
 			move.append(splits[i])
