@@ -264,5 +264,19 @@ def queryByColor(imageDir, directory, queryImage):
 	bigImage.show()
 	print "List images that you want to move. Separate each number or range by commas. Example: 1-4, 6, 8, 11-15.\n"
 	var = raw_input("List:")
+	print ("You chose to move: " + var)
+	splits = var.split(",", 1) # split string by commans
+	move = []
+	for i in range(len(splits)):
+		print splits[i]
+		# if not an int, continue, also get rid of spaces - remove all non-numerical
+		if "-" in splits[i]:
+			dashed = splits[i].split("-", 1)
+			for j in range(len(dashed)):
+				move.append(dashed[j])
+		else:
+			move.append(splits[i])
+	print move
+
 	#TODO: let users pick which images to move
 
