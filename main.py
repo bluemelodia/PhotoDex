@@ -20,17 +20,20 @@ def main():
 	
 	Home = raw_input("Relative Path to Source Directory: ")
 	try:
-		os.listdir(Home)
+		HomeDirectory = os.listdir(Home)
 	except:
 		print "A giant tortoise is using your home as her new shell! Please provide the address of an abode you still own...\n"
 		sys.exit()
 
 	Dest = raw_input("Relative Path to Destination Directory: ")
 	try:
-		os.listdir(Dest)
+		DestDirectory = os.listdir(Dest)
 	except:
 		print "An angry octopus has dragged your destination to the bottom of the sea! Such misfortune!\n"
 		sys.exit()
+
+	print "Home Sweet Home: " + str(Home)
+	print "Final Destination: " + str(Dest)
 
 	print "\nChoose Your Illegal Experiment!\n"
 	print "Available Procedures: \n"
@@ -42,16 +45,15 @@ def main():
 	print "\t'W' - Generate fitness training report"
 	Protocol = raw_input("I choose: ")
 
-
 	if Protocol == 'C':
-		if len(sys.argv) < 5:
-			sys.exit("Protocol C requires an extra argument, 'Q' - query directory or 'D' - calculate dominant image histograms\n")
-		if (sys.argv[4] == 'Q'):
+		subprotocol = raw_input("Enter 'Q' to query directory, 'D' to calculate dominant colors: ")
+		if subprotocol == 'Q':
+			queryImage = raw_input("Enter relative path to your query image: ")
 			print "Color query protocol activated...\n"
-			colorCode.queryByColor(Home, sys.argv[1], sys.argv[3])
-		elif (sys.argv[4] == 'D'):
+			colorCode.queryByColor(Home, HomeDirectory, queryImage)
+		elif subprotocol == 'D':
 			print "Dominant colors protocol activated...\n"
-			colorCode.dominantColors(Home, sys.argv[1], sys.argv[3])
+			colorCode.dominantColors(Home, HomeDirectory, DestDirectory)
 		else:
 			print "Sorry, that option was blasted into smithereens with most of the dinosaurs...\n"
 			sys.exit()

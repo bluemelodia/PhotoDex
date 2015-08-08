@@ -21,10 +21,10 @@ import scipy
 import argparse
 import cv2
 import os
-import sys
 import operator
 import PIL
 import re
+import sys
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -88,7 +88,7 @@ def chi2_distance(histA, histB, eps = 1e-10):
 # the dominant color images are saved in the destination directory of the user's choice
 def dominantColors(listDir, directory, destDir):
 	# step through all files in directory
-	path, dirs, files = os.walk(sys.argv[1]).next()
+	path, dirs, files = os.walk(listDir).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -165,7 +165,7 @@ def queryByColor(imageDir, directory, queryImage):
 		sys.exit("Your image is unfailingly corrupted!")
 
 	# step through all files in directory
-	path, dirs, files = os.walk(sys.argv[1]).next()
+	path, dirs, files = os.walk(imageDir).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -199,13 +199,14 @@ def queryByColor(imageDir, directory, queryImage):
 			hist[(blue, green, red)] += 1
 
 	validPics = 1
-	for imgpath in imageDir:
-		path = directory + "/" + imgpath
-
+	for file in files:
+		#path = imageDir + "/" + imgpath
+		print "Path " + str(file)
+		print str(path)
 		# update progress and display it to the user
 		count += 1	
 
-		if I.what(path) != None:
+		"""if I.what(path) != None:
 			validPics += 1
 			imagePath = directory + "/" + imgpath
 
@@ -228,10 +229,10 @@ def queryByColor(imageDir, directory, queryImage):
 					otherHist[(blue, green, red)] += 1
 			norm = round(L1norm(hist, otherHist, width, height, otherWidth, otherHeight), 5)
 			differences[norm] = imagePath
-			progress.update((float(count)/total)*100)
-		else:
-			progress.update((float(count)/total)*100)
-			continue
+			progress.update((float(count)/total)*100)"""
+		#else:
+		#	progress.update((float(count)/total)*100)
+		#	continue
 	progress.finish()
 	print "\nFinished image similarity calculations.\n"
 
