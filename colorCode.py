@@ -11,7 +11,9 @@
 # Enter 'Q' to query directory, 'D' to calculate dominant colors: D
 
 # The second option is querying a directory with a single image, which will find all the 
-# images that have similar dominant color schemes. Activated by supplying Q as the sub-protocol argument.
+# images that have similar dominant color schemes, rank them from most to least similar to
+# the query image, and give users the opportunity to specify which images they wish to relocate. 
+# Activated by supplying Q as the sub-protocol argument.
 
 # example: python main.py 
 # Relative Path to Source Directory: ../iPhone_Photo_Short
@@ -21,7 +23,6 @@
 # Query Image: ../cero.png 
 
 from sklearn.cluster import KMeans
-#from skimage.measure import structural_similarity as ssim
 import matplotlib.pyplot as pyplot 
 import math
 import random
@@ -170,9 +171,6 @@ def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
 def queryByColor(imageDir, directory, queryImage, destDir):
 	# necessary check to see if the image can be used to query
 	queryPath = os.path.abspath(queryImage)
-
-	if I.what(queryPath) == None:
-		sys.exit("Your image is unfailingly corrupted!")
 
 	# step through all files in directory
 	path, dirs, files = os.walk(imageDir).next()

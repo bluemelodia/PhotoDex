@@ -58,7 +58,6 @@ def main():
 		else:
 			sys.exit("\nSorry, that option was blasted into smithereens with most of the dinosaurs...\n")
 	elif Protocol == 'D':
-		print "\nActivating clone detection algorithm....\n"
 		cloneFate = raw_input("Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): ")
 		if cloneFate != 'M' and cloneFate != 'P': 
 			sys.exit("\nWe don't have the funding for that!\n")
@@ -69,7 +68,7 @@ def main():
 			sys.exit("\nOops, threw it into the shredder! Your image now lives on as beautiful ribbons.\n")
 		if imghdr.what(queryImage) is None:
 				sys.exit("\nYour image lost a proton and isn't quite itself anymore.\n")
-
+		print "\nActivating clone detection algorithm....\n"
 		cloneCrush.cloneCrusher(Home, HomeDirectory, queryImage, Dest, cloneFate)
 
 		#TODO: would probably have to save past histograms
