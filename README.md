@@ -24,24 +24,32 @@ Currently supported experimental procedures are outlined below:<br />
 			Enter 'Q' to query directory, 'D' to calculate dominant colors: Q
 			Enter relative path to your query image: ../cero.png
 			
-    Protocol 'D': Deleting or relocating duplicate or near-duplicate images (coming soon)
+    Protocol 'D': Deleting or relocating duplicate or near-duplicate images
+
+	Sample Inputs:
+		Relative Path to Source Directory: ../Profile_Pictures
+		Relative Path to Destination Directory: ../Profile_Pictures_Original
+		I choose: D
+		Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): P
+		Enter relative path to your query image: ../cero.png
+    
     Protocol 'F': Detecting humans and relocating photos that feature them as the subject matter.
 		
-		Sample Inputs:
-			Relative Path to Source Directory: ../Profile_Pictures
-			Relative Path to Destination Directory: ../Profile_Pictures_Original
-			I choose: F
-			Would you like to see each image in a popup window? ('Y'/'N'): Y
+	Sample Inputs:
+		Relative Path to Source Directory: ../Profile_Pictures
+		Relative Path to Destination Directory: ../Profile_Pictures_Original
+		I choose: F
+		Would you like to see each image in a popup window? ('Y'/'N'): Y
 			
     Protocol 'S': Shrinking photos according to a specified height or width. A photo expansion option 
         is unavailable due to the extremely high risk of image pixellation and uglification.
     		
-		Sample Inputs:
-			Relative Path to Source Directory: ../Profile_Pictures_Original
-			Relative Path to Destination Directory: ../Profile_Pictures_Original
-			I choose: S
-			Enter your impossible-to-attain ideal size: 500
-			Do you want them short or skinny? ('H' - height/'W' - width): W
+	Sample Inputs:
+		Relative Path to Source Directory: ../Profile_Pictures_Original
+		Relative Path to Destination Directory: ../Profile_Pictures_Original
+		I choose: S
+		Enter your impossible-to-attain ideal size: 500
+		Do you want them short or skinny? ('H' - height/'W' - width): W
 
     Protocol 'T': Detecting and translating text in photos (coming soon)
     Protocol 'W': Analyzing screenshots of workout machines and generating a report (coming soon)
