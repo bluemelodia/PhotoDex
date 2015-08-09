@@ -129,6 +129,7 @@ def dominantColors(imageDir, directory, destDir):
 			hist = centroidHist(cluster)
 			bar = plotColors(hist, cluster.cluster_centers_)
 			
+			print str(destDir) + "/" + str(file)
 			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + file)
 
 			progress.update((float(count)/total)*100)

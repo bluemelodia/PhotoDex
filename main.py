@@ -53,7 +53,7 @@ def main():
 			colorCode.queryByColor(Home, HomeDirectory, queryImage)
 		elif subprotocol == 'D':
 			print "Dominant colors protocol activated...\n"
-			colorCode.dominantColors(Home, HomeDirectory, DestDirectory)
+			colorCode.dominantColors(Home, HomeDirectory, Dest)
 		else:
 			print "Sorry, that option was blasted into smithereens with most of the dinosaurs...\n"
 			sys.exit()
