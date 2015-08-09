@@ -43,7 +43,7 @@ def shrinkByHeight(image, height):
 
 def shrinkImages(listDir, directory, size, flag):
 	# step through all files in directory
-	path, dirs, files = os.walk(directory).next()
+	path, dirs, files = os.walk(listDir).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -53,18 +53,17 @@ def shrinkImages(listDir, directory, size, flag):
 	# initialize the progress bar
 	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
-	for imgpath in listDir:
-		path = directory + "/" + imgpath
+	for file in files:
+		path = listDir + "/" + file
 
 		# update progress and display it to the user
 		count += 1
 
 		if I.what(path) != None:
-			imagePath = directory + "/" + imgpath
 			if (flag == 'H'):
-				imagePath = shrinkByWidth(imagePath, int(size))
+				imagePath = shrinkByWidth(path, int(size))
 			else:
-				imagePath = shrinkByHeight(imagePath, int(size))
+				imagePath = shrinkByHeight(path, int(size))
 			bar.update((float(count)/total)*100)
 		else:
 			bar.update((float(count)/total)*100)

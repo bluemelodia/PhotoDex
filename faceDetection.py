@@ -7,7 +7,7 @@
 # Relative Path to Source Directory: ../iPhone_Photo_Short
 # Relative Path to Destination Directory: ../Sentient_Beings
 # I choose: F
-#    N
+# N
 
 from __future__ import division
 from PIL import Image

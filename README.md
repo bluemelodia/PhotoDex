@@ -37,6 +37,11 @@ Currently supported experimental procedures are outlined below:<br />
         is unavailable due to the extremely high risk of image pixellation and uglification.
     		
 		Sample Inputs:
+			Relative Path to Source Directory: ../Profile_Pictures_Original
+			Relative Path to Destination Directory: ../Profile_Pictures_Original
+			I choose: S
+			Enter your impossible-to-attain ideal size: 500
+			Do you want them short or skinny? ('H' - height/'W' - width): W
 
     Protocol 'T': Detecting and translating text in photos (coming soon)
     Protocol 'W': Analyzing screenshots of workout machines and generating a report (coming soon)
