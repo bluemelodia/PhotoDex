@@ -46,10 +46,10 @@ def main():
 		subprotocol = raw_input("Enter 'Q' to query directory, 'D' to calculate dominant colors: ")
 		if subprotocol == 'Q':
 			queryImage = raw_input("Enter relative path to your query image: ")
-			print "Color query protocol activated...\n"
+			print "\nColor query protocol activated...\n"
 			colorCode.queryByColor(Home, HomeDirectory, queryImage)
 		elif subprotocol == 'D':
-			print "Dominant colors protocol activated...\n"
+			print "\nDominant colors protocol activated...\n"
 			colorCode.dominantColors(Home, HomeDirectory, Dest)
 		else:
 			print "Sorry, that option was blasted into smithereens with most of the dinosaurs...\n"
