@@ -3,6 +3,7 @@
 # A class that handles dominant color calculations in an image. There's an option to create
 # and save dominant color bar graphs of all images in a directory - activated by the user 
 # adding D as the sub-protocol argument
+
 # example: python main.py 
 # Relative Path to Source Directory: ../iPhone_Photo_Short 
 # Relative Path to Destination Directory: ../Sentient_Beings
@@ -13,6 +14,7 @@
 # images that have similar dominant color schemes. Activated by adding Q as the last argument.
 # Additionally, instead of a directory, the fourth command-line argument must be the relative
 # path to the image you are using to query
+
 # example: python main.py 
 # Relative Path to Source Directory: ../iPhone_Photo_Short
 # Relative Path to Destination Directory: ../Profile_Pictures_Original

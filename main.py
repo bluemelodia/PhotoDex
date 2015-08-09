@@ -58,14 +58,14 @@ def main():
 		print "Activating clone detection algorithm....\n"
 		#TODO: would probably have to save past histograms
 	elif Protocol == 'F': # detects the presence of sentient beings (humans and cats)
-		if len(sys.argv) < 5:
-			sys.exit("Protocol F requires an extra argument, 'Y' - show images in new window, 'N' - the opposite of 'Y'\n")
-		if (sys.argv[4] != 'Y' and sys.argv[4] != 'N'):
-			print "Maybe is not an answer! Do you want to see the potential humans or not? \n"
+		showWindow = raw_input("Would you like to see each image in a popup window? ('Y'/'N'): ")
+		if showWindow == 'Y' or showWindow == 'N':
+			print "\nCommencing search for human life...\n"
+			faceDetection.cascade()
+			faceDetection.detectLife(Home, HomeDirectory, showWindow, Dest)
+		else:
+			print "I'm afraid that's not an option...\n"
 			sys.exit()
-		print "Commencing search for human...\n"
-		faceDetection.cascade()
-		faceDetection.detectLife(Home, sys.argv[1], sys.argv[4], sys.argv[3])
 	elif Protocol == 'S': # reduces the size of photos
 		if len(sys.argv) < 6:
 			sys.exit("Protocol S requires two extra arguments, desired height/width and 'H' or 'W' - shrink by height or width\n")

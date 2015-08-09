@@ -2,7 +2,12 @@
 
 # To run this protocol, supply an additional fifth argument, Y - show or N - no show
 # This will determine whether the photos are displayed in a window
-# Example: python main.py ../iPhone_Photo_Short F ../Sentient_Beings N
+
+# Example: python main.py
+# Relative Path to Source Directory: ../iPhone_Photo_Short
+# Relative Path to Destination Directory: ../Sentient_Beings
+# I choose: F
+#    N
 
 from __future__ import division
 from PIL import Image
@@ -70,7 +75,7 @@ def detectLife(listDir, directory, flag, destDir):
 	showPhotos = flag
 
 	# step through all files in directory
-	path, dirs, files = os.walk(directory).next()
+	path, dirs, files = os.walk(listDir).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -81,26 +86,25 @@ def detectLife(listDir, directory, flag, destDir):
 	# initialize the progress bar
 	bar = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
-	for imgpath in listDir:
-		path = directory + "/" + imgpath
+	for file in files:
+		path = listDir + "/" + file
 
 		# update progress and display it to the user
 		count += 1
 
 		if I.what(path) != None:
 			# resize the image if its width exceeds 500 pixels
-			imagePath = directory + "/" + imgpath
-			image = Image.open(imagePath)
+			image = Image.open(path)
 			width, height = image.size
 			if width > 500:
-				imagePath = shrinkRay.shrinkByWidth(imagePath, 500)
+				imagePath = shrinkRay.shrinkByWidth(path, 500)
 
 			for cascade in cascades:
-				faces = detection(cascade, imagePath)
+				faces = detection(cascade, path)
 				# if we know that there is a face, there's no need to try subsequent cascades
 				if faces >= 1:			
 					faceCount += 1
-					os.rename(imagePath, destDir + "/" + os.path.basename(imgpath))
+					os.rename(path, destDir + "/" + os.path.basename(path))
 					break
 			bar.update((float(count)/total)*100)
 		else:
