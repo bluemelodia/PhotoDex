@@ -104,8 +104,6 @@ def dominantColors(imageDir, directory, destDir):
 
 	for file in files:
 		path = imageDir + "/" + file
-		print "Path " + str(file)
-		print str(path)
 
 		# update progress and display it to the user
 		count += 1
@@ -129,7 +127,6 @@ def dominantColors(imageDir, directory, destDir):
 			hist = centroidHist(cluster)
 			bar = plotColors(hist, cluster.cluster_centers_)
 			
-			print str(destDir) + "/" + str(file)
 			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + file)
 
 			progress.update((float(count)/total)*100)
@@ -137,6 +134,8 @@ def dominantColors(imageDir, directory, destDir):
 			progress.update((float(count)/total)*100)
 			continue
 	progress.finish()
+
+	print "\nPalettes successfully created in " + str(destDir) + "\n"
 
 # round each pixel value so it fits into one of the bins
 def rnd(x):
@@ -212,7 +211,7 @@ def queryByColor(imageDir, directory, queryImage):
 		# update progress and display it to the user
 		count += 1	
 
-		"""if I.what(path) != None:
+		if I.what(path) != None:
 			validPics += 1
 			imagePath = directory + "/" + imgpath
 
@@ -235,10 +234,10 @@ def queryByColor(imageDir, directory, queryImage):
 					otherHist[(blue, green, red)] += 1
 			norm = round(L1norm(hist, otherHist, width, height, otherWidth, otherHeight), 5)
 			differences[norm] = imagePath
-			progress.update((float(count)/total)*100)"""
-		#else:
-		#	progress.update((float(count)/total)*100)
-		#	continue
+			progress.update((float(count)/total)*100)
+		else:
+			progress.update((float(count)/total)*100)
+			continue
 	progress.finish()
 	print "\nFinished image similarity calculations.\n"
 

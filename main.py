@@ -32,9 +32,6 @@ def main():
 		print "An angry octopus has dragged your destination to the bottom of the sea! Such misfortune!\n"
 		sys.exit()
 
-	print "Home Sweet Home: " + str(Home)
-	print "Final Destination: " + str(Dest)
-
 	print "\nChoose Your Illegal Experiment!\n"
 	print "Available Procedures: \n"
 	print "\t'C' - Dominant colors sorting protocol"
@@ -42,7 +39,7 @@ def main():
 	print "\t'F' - Search for human life - face detection protocol"
 	print "\t'S' - Shrink ray"
 	print "\t'T' - Text recognition and retrieval protocol"
-	print "\t'W' - Generate fitness training report"
+	print "\t'W' - Generate fitness training report\n"
 	Protocol = raw_input("I choose: ")
 
 	if Protocol == 'C':
