@@ -12,8 +12,8 @@ Currently supported experimental procedures are outlined below:<br />
 			Relative Path to Destination Directory: ../Profile_Pictures_Original
 			I choose: C
 			Enter 'Q' to query directory, 'D' to calculate dominant colors: D
-
-	[Sub-Protocol 'Q']: Search an directory and rank its images by color similarity to a user-specified
+	
+	    [Sub-Protocol 'Q']: Search an directory and rank its images by color similarity to a user-specified
             query image. The ranked images are displayed to the user, who is given the option to specify
             which images they would like to move to a specified destination directory.
 	
