@@ -28,6 +28,10 @@ Currently supported experimental procedures are outlined below:<br />
     Protocol 'F': Detecting humans and relocating photos that feature them as the subject matter.
 		
 		Sample Inputs:
+			Relative Path to Source Directory: ../Profile_Pictures
+			Relative Path to Destination Directory: ../Profile_Pictures_Original
+			I choose: F
+			Would you like to see each image in a popup window? ('Y'/'N'): Y
 			
     Protocol 'S': Shrinking photos according to a specified height or width. A photo expansion option 
         is unavailable due to the extremely high risk of image pixellation and uglification.
