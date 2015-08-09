@@ -13,7 +13,12 @@
 # images that have similar dominant color schemes. Activated by adding Q as the last argument.
 # Additionally, instead of a directory, the fourth command-line argument must be the relative
 # path to the image you are using to query
-# example: python main.py ../iPhone_Photo_Short C ../cero.png Q
+# example: python main.py 
+# Relative Path to Source Directory: ../iPhone_Photo_Short
+# Relative Path to Destination Directory: ../Profile_Pictures_Original
+# I choose: C
+# Enter 'Q' to query directory, 'D' to calculate dominant colors: Q
+# Query Image: ../cero.png 
 
 from sklearn.cluster import KMeans
 #from skimage.measure import structural_similarity as ssim
@@ -205,7 +210,7 @@ def queryByColor(imageDir, directory, queryImage):
 
 	validPics = 1
 	for file in files:
-		path = imageDir + "/" + imgpath
+		path = imageDir + "/" + file
 		print "Path " + str(file)
 		print str(path)
 		# update progress and display it to the user
@@ -213,10 +218,9 @@ def queryByColor(imageDir, directory, queryImage):
 
 		if I.what(path) != None:
 			validPics += 1
-			imagePath = directory + "/" + imgpath
 
 			otherHist = {}
-			otherImg = Image.open(imagePath)
+			otherImg = Image.open(path)
 			pix = otherImg.load()
 
 			for i in range(0, 8):
@@ -233,7 +237,7 @@ def queryByColor(imageDir, directory, queryImage):
 					red = rnd(pixel[2])
 					otherHist[(blue, green, red)] += 1
 			norm = round(L1norm(hist, otherHist, width, height, otherWidth, otherHeight), 5)
-			differences[norm] = imagePath
+			differences[norm] = path
 			progress.update((float(count)/total)*100)
 		else:
 			progress.update((float(count)/total)*100)
@@ -308,8 +312,8 @@ def queryByColor(imageDir, directory, queryImage):
 			move.append(splits[i])
 	print "Images with these numbers will be 'politely' asked to relocate: " + str(move) + ".\n"
 
-	dest = raw_input("Specify relative path to destination:")
-	print "Final Destination: " + dest + "\n"
+	#dest = raw_input("Specify relative path to destination:")
+	#print "Final Destination: " + dest + "\n"
 
 	#TODO: can alter entire console to supply all command-line arguments
 
