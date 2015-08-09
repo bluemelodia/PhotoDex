@@ -1,13 +1,13 @@
 # Created by: Melanie Hsu (bluemelodia)
 
-# To run this protocol, supply an additional fifth argument, Y - show or N - no show
+# To run this protocol, user is asked to specify Y - show or N - no show
 # This will determine whether the photos are displayed in a window
 
 # Example: python main.py
 # Relative Path to Source Directory: ../iPhone_Photo_Short
 # Relative Path to Destination Directory: ../Sentient_Beings
 # I choose: F
-# N
+# Would you like to see each image in a popup window? ('Y'/'N'): N
 
 from __future__ import division
 from PIL import Image

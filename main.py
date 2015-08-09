@@ -43,7 +43,7 @@ def main():
 		if subprotocol == 'Q':
 			queryImage = raw_input("Enter relative path to your query image: ")
 			print "\nColor query protocol activated...\n"
-			colorCode.queryByColor(Home, HomeDirectory, queryImage)
+			colorCode.queryByColor(Home, HomeDirectory, queryImage, Dest)
 		elif subprotocol == 'D':
 			print "\nDominant colors protocol activated...\n"
 			colorCode.dominantColors(Home, HomeDirectory, Dest)

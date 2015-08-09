@@ -1,8 +1,12 @@
 # Created by: Melanie Hsu (bluemelodia)
 
 # A handy ray that will shrink the size of all images in the provided directory
-# If calling through 'R' protocol, supply a size argument to main along with a flag ('H' for height or 'W' for width)
-# Example:  python main.py ../Profile_Pictures R ../Art 500 W
+# Example call:
+# Relative Path to Source Directory: ../Profile_Pictures_Original
+# Relative Path to Destination Directory: ../Profile_Pictures_Original
+# I choose: S
+# Enter your impossible-to-attain ideal size: 500
+# Do you want them short or skinny? ('H' - height/'W' - width): W
 
 import cv2
 import os

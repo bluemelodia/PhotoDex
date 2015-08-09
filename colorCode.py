@@ -2,7 +2,7 @@
 
 # A class that handles dominant color calculations in an image. There's an option to create
 # and save dominant color bar graphs of all images in a directory - activated by the user 
-# adding D as the sub-protocol argument
+# specifying D as the sub-protocol argument.
 
 # example: python main.py 
 # Relative Path to Source Directory: ../iPhone_Photo_Short 
@@ -11,9 +11,7 @@
 # Enter 'Q' to query directory, 'D' to calculate dominant colors: D
 
 # The second option is querying a directory with a single image, which will find all the 
-# images that have similar dominant color schemes. Activated by adding Q as the last argument.
-# Additionally, instead of a directory, the fourth command-line argument must be the relative
-# path to the image you are using to query
+# images that have similar dominant color schemes. Activated by supplying Q as the sub-protocol argument.
 
 # example: python main.py 
 # Relative Path to Source Directory: ../iPhone_Photo_Short
@@ -169,7 +167,7 @@ def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
 
 # query a directory of images for images that are similar in color
 # for this to work, you must first supply the query image as a commmand-line argument
-def queryByColor(imageDir, directory, queryImage):
+def queryByColor(imageDir, directory, queryImage, destDir):
 	# necessary check to see if the image can be used to query
 	queryPath = os.path.abspath(queryImage)
 
@@ -213,8 +211,6 @@ def queryByColor(imageDir, directory, queryImage):
 	validPics = 1
 	for file in files:
 		path = imageDir + "/" + file
-		print "Path " + str(file)
-		print str(path)
 		# update progress and display it to the user
 		count += 1	
 
@@ -279,7 +275,7 @@ def queryByColor(imageDir, directory, queryImage):
 	# Allow users to specify numbers and ranges corresponding to what they want to move
 	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
 	print "Legal photo numbers for your directory range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
-	var = raw_input("List:")
+	var = raw_input("List: ")
 	print ("You chose to move: " + var + "\n")
 	splits = var.split(",", 1) # split string by commans
 	move = []
@@ -303,19 +299,22 @@ def queryByColor(imageDir, directory, queryImage):
 			print "Start: " + str(dashed[0])
 			print "End: " + str(dashed[1])
 			for j in range(int(dashed[0]), int(dashed[1])):
-				move.append(j)
-			move.append(dashed[1])
+				move.append(int(j))
+			move.append(int(dashed[1]))
 		else:
 			if not splits[i].isdigit():
 				continue
 			if int(splits[i]) < 1 or int(splits[i]) >= len(sorted_dictionary):
 				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
 				continue
-			move.append(splits[i])
+			move.append(int(splits[i]))
 	print "Images with these numbers will be 'politely' asked to relocate: " + str(move) + ".\n"
 
-	#dest = raw_input("Specify relative path to destination:")
-	#print "Final Destination: " + dest + "\n"
+	moveCount = 0
 
-	#TODO: can alter entire console to supply all command-line arguments
+	for (i, (value, image)) in enumerate(sorted_dictionary):
+		if i in move:
+			moveCount += 1
+			os.rename(image, destDir + "/" + os.path.basename(image))
 
+	print "Moved " + str(moveCount) + " images to " + str(destDir) + ".\n"
