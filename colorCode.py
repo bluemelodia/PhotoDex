@@ -2,8 +2,12 @@
 
 # A class that handles dominant color calculations in an image. There's an option to create
 # and save dominant color bar graphs of all images in a directory - activated by the user 
-# adding D as the last command-line argument:
-# example: python main.py ../iPhone_Photo_Short C ../Sentient_Beings D
+# adding D as the sub-protocol argument
+# example: python main.py 
+# Relative Path to Source Directory: ../iPhone_Photo_Short 
+# Relative Path to Destination Directory: ../Sentient_Beings
+# I choose: C
+# Enter 'Q' to query directory, 'D' to calculate dominant colors: D
 
 # The second option is querying a directory with a single image, which will find all the 
 # images that have similar dominant color schemes. Activated by adding Q as the last argument.
@@ -86,9 +90,9 @@ def chi2_distance(histA, histB, eps = 1e-10):
 
 # finds and saves a bar image of the most dominant colors in a picture in the destination directory 
 # the dominant color images are saved in the destination directory of the user's choice
-def dominantColors(listDir, directory, destDir):
+def dominantColors(imageDir, directory, destDir):
 	# step through all files in directory
-	path, dirs, files = os.walk(listDir).next()
+	path, dirs, files = os.walk(imageDir).next()
 
 	# initialize the progress variables
 	total = len(files)
@@ -98,8 +102,10 @@ def dominantColors(listDir, directory, destDir):
 	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
-	for imgpath in listDir:
-		path = directory + "/" + imgpath
+	for file in files:
+		path = imageDir + "/" + imgpath
+		print "Path " + str(file)
+		print str(path)
 
 		# update progress and display it to the user
 		count += 1
@@ -200,7 +206,7 @@ def queryByColor(imageDir, directory, queryImage):
 
 	validPics = 1
 	for file in files:
-		#path = imageDir + "/" + imgpath
+		path = imageDir + "/" + imgpath
 		print "Path " + str(file)
 		print str(path)
 		# update progress and display it to the user
