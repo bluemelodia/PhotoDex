@@ -103,7 +103,7 @@ def dominantColors(imageDir, directory, destDir):
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
 	for file in files:
-		path = imageDir + "/" + imgpath
+		path = imageDir + "/" + file
 		print "Path " + str(file)
 		print str(path)
 
@@ -111,10 +111,9 @@ def dominantColors(imageDir, directory, destDir):
 		count += 1
 
 		if I.what(path) != None:
-			imagePath = directory + "/" + imgpath
 
 			# load the image nand convert it from BGR to RGB, enabling display with matplotlib
-			image = cv2.imread(imagePath)
+			image = cv2.imread(path)
 			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 			# reshape the NumPy array to a list of RGB pixels
@@ -130,7 +129,7 @@ def dominantColors(imageDir, directory, destDir):
 			hist = centroidHist(cluster)
 			bar = plotColors(hist, cluster.cluster_centers_)
 			
-			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + imgpath)
+			scipy.misc.toimage(bar, cmin=0.0, cmax=None).save(destDir + "/" + file)
 
 			progress.update((float(count)/total)*100)
 		else:
