@@ -49,6 +49,7 @@ def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
 	norm = distance/sum
 	return norm
 
+# This shouldn't be relying on a query - you have to calculate whether each image is related to any other*
 def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
 	# necessary check to see if the image can be used to query
 	queryPath = os.path.abspath(queryImage)
@@ -68,8 +69,9 @@ def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
 	differences = {}
 	differences[0] = queryPath
 
-	# make a histogram
+	# make a histogram for color similarity
 	hist = {}
+
 	queryImg = Image.open(queryImage)
 	pix = queryImg.load()
 
@@ -120,4 +122,71 @@ def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
 			progress.update((float(count)/total)*100)
 			continue
 	progress.finish()
-	print "\nFinished image similarity calculations.\n"
+	print "\nFinished color similarity calculations.\n"
+
+	# sort the images from most to least similar to query
+	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
+
+	print "Generating rankings...\n"
+
+	# initialize the second progress bar
+	progressTwo = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+	counting = 0
+
+	# resize images, then concatenate them into one large image, labeling them by number
+    	font = ImageFont.load_default()
+    	bigImage = Image.new('RGB', (100*(validPics), 100))
+    	draw = ImageDraw.Draw(bigImage)
+
+    	for (i, (value, image)) in enumerate(sorted_dictionary):
+    		counting += 1
+		basewidth = 100
+		img = Image.open(image)
+		wpercent = (basewidth / float(img.size[0]))
+		hsize = int((float(img.size[1]) * float(wpercent)))
+		resizedImg = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+    		bigImage.paste(resizedImg, (100*i, 0))
+    		draw.text((100*i, 0), str(i), (255, 255, 255), font=font)
+    		draw.text((100*i, 30), str(value), (255, 255, 255), font = font)
+    		progressTwo.update((float(counting)/validPics)*100)
+    	bigImage.save("rankings.jpg")
+    	progressTwo.finish()
+	print "\n\nImage stitching complete! 0 = query image, from L->R = most to least similar to query image\n"
+
+	bigImage.show()
+
+	# Allow users to specify numbers and ranges corresponding to what they want to move
+	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
+	print "Legal photo numbers for your directory range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
+	var = raw_input("List: ")
+	splits = var.split(",", 1) # split string by commans
+	move = []
+
+	for i in range(len(splits)):
+		splits[i] = splits[i].replace(" ", "") # replace spaces in string
+		if "-" in splits[i]:
+			dashed = splits[i].split("-", 1)
+			if not (dashed[0].isdigit() and dashed[1].isdigit()):
+				continue
+			if int(dashed[0]) > int(dashed[1]):
+				temp = dashed[1]
+				dashed[1] = dashed[0]
+				dashed[0] = temp
+			if int(dashed[0]) < 1:
+				print str(int(dashed[0])) + " is too puny for our instruments to detect. Raising to min acceptable number...\n"				
+				dashed[0] = 1
+			if int(dashed[1]) >= len(sorted_dictionary):
+				print str(int(dashed[1])) + " is beyond our comprehension. Truncating to max acceptable number...\n"
+				dashed[1] = len(sorted_dictionary)-1
+			print "Start: " + str(dashed[0])
+			print "End: " + str(dashed[1])
+			for j in range(int(dashed[0]), int(dashed[1])):
+				move.append(int(j))
+			move.append(int(dashed[1]))
+		else:
+			if not splits[i].isdigit():
+				continue
+			if int(splits[i]) < 1 or int(splits[i]) >= len(sorted_dictionary):
+				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
+				continue
+			move.append(int(splits[i]))
