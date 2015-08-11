@@ -85,6 +85,8 @@ def main():
 		print "\nImproving human understanding...\n"
 	elif Protocol == 'W': # creates a report based on workout screenshots
 		print "\nGenerating training reports...\n"
+	else: 
+		print "\nThat's evil even by our standards! We absolutely cannot perform that experiment!\n"
 
 	print "- - - - - Thank you for visiting PhotoDex Laboratory - - - - -\n"
 

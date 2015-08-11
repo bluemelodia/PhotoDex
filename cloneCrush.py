@@ -70,15 +70,15 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			similarities[path] = {}
 			hist[path] = {}
 
-	# initialize the progress variables
+	# initialize the progress variables and bar
 	count = 0
-	progress = 0
-
-	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
+	print "Generating image color histograms.\n"
 
 	# iterate through each image, making and saving its histogram
 	for key, value in similarities.items():
+		count += 1
 		thisHist = {}
 		thisImage = Image.open(key)
 		pix = thisImage.load()
@@ -97,6 +97,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 				red = rnd(pixel[2])
 				thisHist[(blue, green, red)] += 1
 		hist[key] = thisHist # save the histogram
+		progress.update((float(count)/validPics)*100)
+	progress.finish()
 	
 	for key, value in hist.items():
 		for otherKey, otherValue in hist.items():
@@ -113,6 +115,10 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			norm = round(L1norm(value, otherValue, thisWidth, thisHeight, thatWidth, thatHeight), 5)
 			similarities[key][otherKey] = norm
 	print similarities
+
+	# sort the dictionaries
+	#for key, otherkey in 
+	#sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
 
 	"""
 		# update progress and display it to the user
