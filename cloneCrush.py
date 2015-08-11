@@ -119,7 +119,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			similarities[key][otherKey] = norm
 			progressTwo.update((float(count)/validPics)*100)
 	progressTwo.finish()
-	#print similarities
 
 	progressThree = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
@@ -128,8 +127,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	bigImage = Image.new('RGB', (100*(validPics), 100*(validPics)))
 	draw = ImageDraw.Draw(bigImage)
 
-	keyCount = 0
+	keyCount = 0 # track iterations in the outer loop
 
+	# create an image showing all image similarities to each other
 	for key, value in similarities.items():
 		basewidth = 100
 		baseImage = Image.open(key)
@@ -137,10 +137,19 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		hsize = int((float(baseImage.size[1]) * float(wpercent)))
 		resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
 		bigImage.paste(resizedImg, (0, 100*keyCount))
+		draw.text((0, 100*keyCount), str(0.0), (255, 255, 255), font=font)
 
-		print str(key) + "" + str(value)
+		innerCount = 1 # track iterations in the inner loop
+
 		for innerKey, innerValue in similarities[key].items():
+			addImage = Image.open(innerKey)
+			wpercent = (basewidth / float(addImage.size[0]))
+			hsize = int((float(addImage.size[1]) * float(wpercent)))
+			resizedAddImage = addImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+			bigImage.paste(resizedAddImage, (100*innerCount, 100*keyCount))
+			draw.text((100*innerCount, 100*keyCount), str(innerValue), (255, 255, 255), font=font)
 			print str(innerKey) + " " + str(innerValue)
+			innerCount += 1
 		keyCount += 1
 	bigImage.show()
 
