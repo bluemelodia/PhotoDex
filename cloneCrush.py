@@ -67,7 +67,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		path = imageDir + "/" + file
 		if I.what(path) != None:
 			validPics += 1
-			similarities[path] = []
+			similarities[path] = {}
 			hist[path] = {}
 
 	# initialize the progress variables
@@ -97,7 +97,22 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 				red = rnd(pixel[2])
 				thisHist[(blue, green, red)] += 1
 		hist[key] = thisHist # save the histogram
-	print hist
+	
+	for key, value in hist.items():
+		for otherKey, otherValue in hist.items():
+			if key == otherKey and value == otherValue:
+				print "Skipping myself"
+				continue
+			print str(key) + " vs " + str(otherKey)
+			print str(value) + " vs " + str(otherValue)
+			thisImage = Image.open(key)
+			thatImage = Image.open(otherKey)
+			thisWidth, thisHeight = thisImage.size
+			thatWidth, thatHeight = thatImage.size
+
+			norm = round(L1norm(value, otherValue, thisWidth, thisHeight, thatWidth, thatHeight), 5)
+			similarities[key][otherKey] = norm
+	print similarities
 
 	"""
 		# update progress and display it to the user
