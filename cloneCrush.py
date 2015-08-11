@@ -63,6 +63,16 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	# save the histogram of each image
 	hist = {}
 
+	# turn everything into the same format to enable image comparisons
+	for file in files:
+		path = imageDir + "/" + file
+		path = path.rsplit ('.', 1)
+		print path[0]
+		print path[1]
+		newpath = str(path[0]) + '.jpg'
+		print newpath
+		os.rename(path, newpath)
+
 	for file in files:
 		path = imageDir + "/" + file
 		if I.what(path) != None:
