@@ -50,46 +50,35 @@ def L1norm(A, B, Awidth, Aheight, Bwidth, Bheight):
 	return norm
 
 # This shouldn't be relying on a query - you have to calculate whether each image is related to any other*
-def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
-	# necessary check to see if the image can be used to query
-	queryPath = os.path.abspath(queryImage)
-
+def cloneCrusher(imageDir, directory, destDir, flag):
 	# step through all files in directory
 	path, dirs, files = os.walk(imageDir).next()
 
+	# take a count of how many valid pictures we have
+	validPics = 0
+
+	for file in files:
+		path = imageDir + "/" + file
+		if I.what(path) != None:
+			validPics += 1
+
+	# make a record of how similar images are to each other
+	similarities = {}
+
+	for i in range(0, validPics):
+		similarities[i] = []
+	print similarities
+
 	# initialize the progress variables
-	total = len(files)
 	count = 0
 	progress = 0
 
 	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
-	# store the distance
-	differences = {}
-	differences[0] = queryPath
-
-	# make a histogram for color similarity
+	# save the histogram of each image
 	hist = {}
 
-	queryImg = Image.open(queryImage)
-	pix = queryImg.load()
-
-	for i in range(0, 8):
-		for j in range(0, 8):
-			for k in range(0, 8):
-				hist[(i, j, k)] = 0
-
-	width, height = queryImg.size
-	for i in range(0, width):
-		for j in range(0, height):
-			pixel = pix[i, j]
-			blue = rnd(pixel[0])
-			green = rnd(pixel[1])
-			red = rnd(pixel[2])
-			hist[(blue, green, red)] += 1
-
-	validPics = 1
 	for file in files:
 		path = imageDir + "/" + file
 		# update progress and display it to the user
@@ -123,6 +112,7 @@ def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
 			continue
 	progress.finish()
 	print "\nFinished color similarity calculations.\n"
+	"""
 
 	# sort the images from most to least similar to query
 	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
@@ -190,3 +180,4 @@ def cloneCrusher(imageDir, directory, queryImage, destDir, flag):
 				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
 				continue
 			move.append(int(splits[i]))
+"""

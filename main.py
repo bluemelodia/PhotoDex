@@ -61,15 +61,7 @@ def main():
 		cloneFate = raw_input("Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): ")
 		if cloneFate != 'M' and cloneFate != 'P': 
 			sys.exit("\nWe don't have the funding for that!\n")
-		queryImage = raw_input("Enter relative path to your query image: ")
-		try:
-			os.path.isfile(queryImage)
-		except:
-			sys.exit("\nOops, threw it into the shredder! Your image now lives on as beautiful ribbons.\n")
-		if imghdr.what(queryImage) is None:
-				sys.exit("\nYour image lost a proton and isn't quite itself anymore.\n")
-		print "\nActivating clone detection algorithm....\n"
-		cloneCrush.cloneCrusher(Home, HomeDirectory, queryImage, Dest, cloneFate)
+		cloneCrush.cloneCrusher(Home, HomeDirectory, Dest, cloneFate)
 
 		#TODO: would probably have to save past histograms
 	elif Protocol == 'F': # detects the presence of sentient beings (humans and cats)
