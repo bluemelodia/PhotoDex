@@ -67,9 +67,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	for file in files:
 		path = imageDir + "/" + file
 		splitpath = path.rsplit ('.', 1)
-		print path
 		newpath = str(splitpath[0]) + '.jpg'
-		print newpath
 		os.rename(str(path), str(newpath))
 
 	for file in files:
@@ -129,8 +127,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			progressTwo.update((float(count)/validPics)*100)
 	progressTwo.finish()
 
-	progressThree = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+	print "\nGenerating similarity rankings...\n"
 
+	progressThree = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
 	font = ImageFont.load_default()
 	bigImage = Image.new('RGB', (100*(validPics), 100*(validPics)))
@@ -157,9 +156,11 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			resizedAddImage = addImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
 			bigImage.paste(resizedAddImage, (100*innerCount, 100*keyCount))
 			draw.text((100*innerCount, 100*keyCount), str(innerValue), (255, 255, 255), font=font)
-			print str(innerKey) + " " + str(innerValue)
 			innerCount += 1
 		keyCount += 1
+		progressThree.update((float(keyCount)/validPics)*100)
+	progressThree.finish()
+	bigImage.save("similarities.jpg")
 	bigImage.show()
 
 	"""
