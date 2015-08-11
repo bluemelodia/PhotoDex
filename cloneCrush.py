@@ -119,7 +119,30 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			similarities[key][otherKey] = norm
 			progressTwo.update((float(count)/validPics)*100)
 	progressTwo.finish()
-	print similarities
+	#print similarities
+
+	progressThree = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
+
+	font = ImageFont.load_default()
+	bigImage = Image.new('RGB', (100*(validPics), 100*(validPics)))
+	draw = ImageDraw.Draw(bigImage)
+
+	keyCount = 0
+
+	for key, value in similarities.items():
+		basewidth = 100
+		baseImage = Image.open(key)
+		wpercent = (basewidth / float(baseImage.size[0]))
+		hsize = int((float(baseImage.size[1]) * float(wpercent)))
+		resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+		bigImage.paste(resizedImg, (0, 100*keyCount))
+
+		print str(key) + "" + str(value)
+		for innerKey, innerValue in similarities[key].items():
+			print str(innerKey) + " " + str(innerValue)
+		keyCount += 1
+	bigImage.show()
 
 	"""
 	# sort the images from most to least similar to query
