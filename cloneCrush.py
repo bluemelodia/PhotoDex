@@ -57,17 +57,18 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	# take a count of how many valid pictures we have
 	validPics = 0
 
+	# make a record of how similar images are to each other
+	similarities = {}
+
+	# save the histogram of each image
+	hist = {}
+
 	for file in files:
 		path = imageDir + "/" + file
 		if I.what(path) != None:
 			validPics += 1
-
-	# make a record of how similar images are to each other
-	similarities = {}
-
-	for i in range(0, validPics):
-		similarities[i] = []
-	print similarities
+			similarities[path] = []
+			hist[path] = {}
 
 	# initialize the progress variables
 	count = 0
@@ -76,19 +77,34 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	# initialize the progress bar
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
 
-	# save the histogram of each image
-	hist = {}
+	# iterate through each image, making and saving its histogram
+	for key, value in similarities.items():
+		thisHist = {}
+		thisImage = Image.open(key)
+		pix = thisImage.load()
 
-	for file in files:
-		path = imageDir + "/" + file
+		for i in range(0, 8):
+				for j in range(0, 8):
+					for k in range(0, 8):
+						thisHist[(i, j, k)] = 0
+
+		width, height = thisImage.size
+		for i in range(0, width):
+			for j in range(0, height):
+				pixel = pix[i, j]
+				blue = rnd(pixel[0])
+				green = rnd(pixel[1])
+				red = rnd(pixel[2])
+				thisHist[(blue, green, red)] += 1
+		hist[key] = thisHist # save the histogram
+	print hist
+
+	"""
 		# update progress and display it to the user
 		count += 1	
 
-		if I.what(path) != None:
-			validPics += 1
-
-			otherHist = {}
-			otherImg = Image.open(path)
+			thisHist = {}
+			thisImage = Image.open(path)
 			pix = otherImg.load()
 
 			for i in range(0, 8):
@@ -112,7 +128,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			continue
 	progress.finish()
 	print "\nFinished color similarity calculations.\n"
-	"""
 
 	# sort the images from most to least similar to query
 	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
