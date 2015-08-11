@@ -56,3 +56,5 @@ Currently supported experimental procedures are outlined below:<br />
 
 Research Notes: <br />
 Due to limitations in face detection algorithms, Protocol 'F' does not have a 100% accuracy rate.
+
+For video demos of the code, check out my portfolio: http://bluemelodia.github.io/
