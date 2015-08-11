@@ -70,11 +70,11 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			similarities[path] = {}
 			hist[path] = {}
 
+	print "Generating image color histograms.\n"
+
 	# initialize the progress variables and bar
 	count = 0
 	progress = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
-
-	print "Generating image color histograms.\n"
 
 	# iterate through each image, making and saving its histogram
 	for key, value in similarities.items():
@@ -99,14 +99,17 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		hist[key] = thisHist # save the histogram
 		progress.update((float(count)/validPics)*100)
 	progress.finish()
-	
+
+	print "\nRunning DNA tests...\n"
+
+	count = 0
+	progressTwo = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
 	for key, value in hist.items():
+		count += 1
 		for otherKey, otherValue in hist.items():
 			if key == otherKey and value == otherValue:
-				print "Skipping myself"
 				continue
-			print str(key) + " vs " + str(otherKey)
-			print str(value) + " vs " + str(otherValue)
 			thisImage = Image.open(key)
 			thatImage = Image.open(otherKey)
 			thisWidth, thisHeight = thisImage.size
@@ -114,42 +117,11 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 			norm = round(L1norm(value, otherValue, thisWidth, thisHeight, thatWidth, thatHeight), 5)
 			similarities[key][otherKey] = norm
+			progressTwo.update((float(count)/validPics)*100)
+	progressTwo.finish()
 	print similarities
 
-	# sort the dictionaries
-	#for key, otherkey in 
-	#sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
-
 	"""
-		# update progress and display it to the user
-		count += 1	
-
-			thisHist = {}
-			thisImage = Image.open(path)
-			pix = otherImg.load()
-
-			for i in range(0, 8):
-				for j in range(0, 8):
-					for k in range(0, 8):
-						otherHist[(i, j, k)] = 0
-
-			otherWidth, otherHeight = otherImg.size
-			for i in range(0, otherWidth):
-				for j in range(0, otherHeight):
-					pixel = pix[i, j]
-					blue = rnd(pixel[0])
-					green = rnd(pixel[1])
-					red = rnd(pixel[2])
-					otherHist[(blue, green, red)] += 1
-			norm = round(L1norm(hist, otherHist, width, height, otherWidth, otherHeight), 5)
-			differences[norm] = path
-			progress.update((float(count)/total)*100)
-		else:
-			progress.update((float(count)/total)*100)
-			continue
-	progress.finish()
-	print "\nFinished color similarity calculations.\n"
-
 	# sort the images from most to least similar to query
 	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
 

@@ -61,8 +61,8 @@ def main():
 		cloneFate = raw_input("Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): ")
 		if cloneFate != 'M' and cloneFate != 'P': 
 			sys.exit("\nWe don't have the funding for that!\n")
+		print "Activating clone detection algorithm...\n"
 		cloneCrush.cloneCrusher(Home, HomeDirectory, Dest, cloneFate)
-
 		#TODO: would probably have to save past histograms
 	elif Protocol == 'F': # detects the presence of sentient beings (humans and cats)
 		showWindow = raw_input("Would you like to see each image in a popup window? ('Y'/'N'): ")
