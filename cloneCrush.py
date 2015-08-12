@@ -19,6 +19,7 @@ import sys
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from collections import OrderedDict
 import imghdr as I
 
 from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, \
@@ -125,7 +126,14 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			norm = round(L1norm(value, otherValue, thisWidth, thisHeight, thatWidth, thatHeight), 5)
 			similarities[key][otherKey] = norm
 			progressTwo.update((float(count)/validPics)*100)
+		
+		# rank the images
+		similarities[key] = OrderedDict(sorted(similarities[key].items(), key=lambda x:x[1], reverse=True))
+		print similarities[key]
+
+		similarities[key] = dict((v, k) for k, v in similarities[key].items())
 	progressTwo.finish()
+	print similarities
 
 	print "\nGenerating similarity rankings...\n"
 
@@ -163,37 +171,10 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	bigImage.save("similarities.jpg")
 	bigImage.show()
 
+	# Allow users to specify similarity thresholds, ie. cluster them together if they are above x similarity
+	# You really need to sort the dictionaries before the image concatenation
+
 	"""
-	# sort the images from most to least similar to query
-	sorted_dictionary = sorted(differences.items(), key=operator.itemgetter(0))
-
-	print "Generating rankings...\n"
-
-	# initialize the second progress bar
-	progressTwo = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
-	counting = 0
-
-	# resize images, then concatenate them into one large image, labeling them by number
-    	font = ImageFont.load_default()
-    	bigImage = Image.new('RGB', (100*(validPics), 100))
-    	draw = ImageDraw.Draw(bigImage)
-
-    	for (i, (value, image)) in enumerate(sorted_dictionary):
-    		counting += 1
-		basewidth = 100
-		img = Image.open(image)
-		wpercent = (basewidth / float(img.size[0]))
-		hsize = int((float(img.size[1]) * float(wpercent)))
-		resizedImg = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-    		bigImage.paste(resizedImg, (100*i, 0))
-    		draw.text((100*i, 0), str(i), (255, 255, 255), font=font)
-    		draw.text((100*i, 30), str(value), (255, 255, 255), font = font)
-    		progressTwo.update((float(counting)/validPics)*100)
-    	bigImage.save("rankings.jpg")
-    	progressTwo.finish()
-	print "\n\nImage stitching complete! 0 = query image, from L->R = most to least similar to query image\n"
-
-	bigImage.show()
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
 	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
