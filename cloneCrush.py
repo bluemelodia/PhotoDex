@@ -67,6 +67,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	# turn everything into the same format to enable image comparisons
 	for file in files:
 		path = imageDir + "/" + file
+		if I.what(path) != 'png' and I.what(path) != 'ppm' and I.what(path) != 'jpg':
+			continue
 		splitpath = path.rsplit ('.', 1)
 		newpath = str(splitpath[0]) + '.jpg'
 		os.rename(str(path), str(newpath))
@@ -128,10 +130,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			progressTwo.update((float(count)/validPics)*100)
 		
 		# sort the images from most to least similar to the base image
-		similarities[key] = OrderedDict(sorted(similarities[key].items(), key=lambda x:x[1], reverse=True))
-		print similarities[key]
+		similarities[key] = OrderedDict(sorted(similarities[key].items(), key=lambda x:x[1], reverse=False))
 	progressTwo.finish()
-	print similarities
 
 	print "\nGenerating similarity rankings...\n"
 
