@@ -127,11 +127,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			similarities[key][otherKey] = norm
 			progressTwo.update((float(count)/validPics)*100)
 		
-		# rank the images
+		# sort the images from most to least similar to the base image
 		similarities[key] = OrderedDict(sorted(similarities[key].items(), key=lambda x:x[1], reverse=True))
 		print similarities[key]
-
-		similarities[key] = dict((v, k) for k, v in similarities[key].items())
 	progressTwo.finish()
 	print similarities
 
@@ -158,6 +156,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		innerCount = 1 # track iterations in the inner loop
 
 		for innerKey, innerValue in similarities[key].items():
+			print str(innerKey) + " " + str(innerValue)
 			addImage = Image.open(innerKey)
 			wpercent = (basewidth / float(addImage.size[0]))
 			hsize = int((float(addImage.size[1]) * float(wpercent)))
