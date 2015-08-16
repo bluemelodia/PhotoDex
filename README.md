@@ -51,9 +51,6 @@ Currently supported experimental procedures are outlined below:<br />
 		    Enter your impossible-to-attain ideal size: 500
 		    Do you want them short or skinny? ('H' - height/'W' - width): W
 
-    Protocol 'T': Detecting and translating text in photos (coming soon)
-    Protocol 'W': Analyzing screenshots of workout machines and generating a report (coming soon)
-
 Research Notes: <br />
 Due to limitations in face detection algorithms, Protocol 'F' does not have a 100% accuracy rate.
 
