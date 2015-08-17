@@ -189,19 +189,25 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		clusters[clusterCount] = []
 		clusters[clusterCount].append(key)
 		clusterCount += 1
+	print "START: " + str(clusters)
 
 	outerCount = 0
 	for key, value in similarities.items():
 		for innerKey, innerValue in similarities[key].items():
 			if innerValue < threshold:
 				clusters[outerCount].append(innerKey) #add to the cluster
-				for index, image in enumerate(clusters):
+				purgeIndex = 1000
+				for index, image in clusters.iteritems():
+					print str(image) + " vs " + str(innerKey) + "\n" #image is a number now
 					if image == innerKey:
-						clusters.pop(innerKey)
+						purgeIndex = index
+				if purgeIndex != 1000:
+					clusters.pop(purgeIndex)
 		outerCount += 1
+		print clusters
 		progressFour.update((float(keyCount)/validPics)*100)
 	progressFour.finish()
-	print clusters
+	print "DONE: " + str(clusters)
 
 	print "\nGenerating cluster images...\n"
 
@@ -211,8 +217,26 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		if len(clusters[index]) > longest:
 			longest = len(clusters[index])
 
-	
+	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
+	draw = ImageDraw.Draw(clusterImage)
 
+	currentCluster = 0
+	# create an image showing all image clusters
+	for index, group in enumerate(clusters):
+		currentImage = 0
+		for image in clusters[index]:
+			basewidth = 100
+			baseImage = Image.open(image)
+			wpercent = (basewidth / float(baseImage.size[0]))
+			hsize = int((float(baseImage.size[1]) * float(wpercent)))
+			resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+			bigImage.paste(resizedImg, (currentImage, 100*index))
+			currentImage += 1
+		currentCluster += 1
+	clusterImage.save("clusters.jpg")
+	clusterImage.show()
+
+	#TODO: crash bug when you use iphone photos short as the directory
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
