@@ -172,13 +172,29 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	# Allow users to specify similarity thresholds, ie. cluster them together if they are above x similarity
 	# You really need to sort the dictionaries before the image concatenation
 
-	print "Specify similarity cutoff (0 = identical, 1 = dissimilar) x. Any photo whose similarity value is below x will be relocated or purged."
+	print "\nSpecify similarity cutoff between 0 and 1 (0 = identical, 1 = dissimilar)."
 	threshold = raw_input("Cutoff: ")
 
-	if int(threshold) < 0 or int(threshold) > 1:
-		print "Such bounds are illegal!"
-	print threshold
+	if float(threshold) < 0 or float(threshold) > 1:
+		print "\nSuch bounds are illegal!\n"
 
+	print "\nImage clustering begins...\n"
+
+	# Prepare the clusters array, starting with each image in its own separate cluster
+	clusters = {}
+	clusterCount = 0
+	for key, value in similarities.items():
+		clusters[clusterCount] = []
+		clusters[clusterCount].append(key)
+		clusterCount += 1
+	print clusters
+
+	"""for key, value in similarities.items():
+		innerCount = 1 # track iterations in the inner loop
+
+		for innerKey, innerValue in similarities[key].items():
+			if innerValue < threshold:
+	"""
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
