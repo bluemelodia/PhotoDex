@@ -133,6 +133,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		similarities[key] = OrderedDict(sorted(similarities[key].items(), key=lambda x:x[1], reverse=False))
 	progressTwo.finish()
 
+	if (validPics == 0):
+		sys.exit("\nNo valid pics in file...abort abort!\n")
+
 	print "\nGenerating similarity rankings...\n"
 
 	progressThree = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
@@ -191,15 +194,17 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		clusterCount += 1
 	print "START: " + str(clusters)
 
+	"""
+	newClusters = 0
 	outerCount = 0
 	for key, value in similarities.items():
 		for innerKey, innerValue in similarities[key].items():
 			if innerValue < threshold:
-				clusters[outerCount].append(innerKey) #add to the cluster
+
 				purgeIndex = 1000
 				for index, image in clusters.iteritems():
-					print str(image) + " vs " + str(innerKey) + "\n" #image is a number now
-					if image == innerKey:
+					print str(image[0]) + " vs " + str(innerKey) + "\n" #image is a number now
+					if image[0] == innerKey:
 						purgeIndex = index
 				if purgeIndex != 1000:
 					clusters.pop(purgeIndex)
@@ -234,7 +239,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			currentImage += 1
 		currentCluster += 1
 	clusterImage.save("clusters.jpg")
-	clusterImage.show()
+	clusterImage.show()"""
 
 	#TODO: crash bug when you use iphone photos short as the directory
 	"""
