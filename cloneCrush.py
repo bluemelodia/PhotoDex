@@ -204,6 +204,15 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	print clusters
 
 	print "\nGenerating cluster images...\n"
+
+	#find the longest cluster (the cluster with the most number of images in it)
+	longest = 0
+	for index, image in enumerate(clusters):
+		if len(clusters[index]) > longest:
+			longest = len(clusters[index])
+
+	
+
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
