@@ -180,6 +180,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 	print "\nImage clustering begins...\n"
 
+	progressFour = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
 	# Prepare the clusters array, starting with each image in its own separate cluster
 	clusters = {}
 	clusterCount = 0
@@ -187,14 +189,21 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		clusters[clusterCount] = []
 		clusters[clusterCount].append(key)
 		clusterCount += 1
-	print clusters
 
-	"""for key, value in similarities.items():
-		innerCount = 1 # track iterations in the inner loop
-
+	outerCount = 0
+	for key, value in similarities.items():
 		for innerKey, innerValue in similarities[key].items():
 			if innerValue < threshold:
-	"""
+				clusters[outerCount].append(innerKey) #add to the cluster
+				for index, image in enumerate(clusters):
+					if image == innerKey:
+						clusters.pop(innerKey)
+		outerCount += 1
+		progressFour.update((float(keyCount)/validPics)*100)
+	progressFour.finish()
+	print clusters
+
+	print "\nGenerating cluster images...\n"
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move

@@ -35,8 +35,6 @@ def main():
 	print "\t'D' - Duplicate image sorting protocol"
 	print "\t'F' - Search for human life - face detection protocol"
 	print "\t'S' - Shrink ray"
-	print "\t'T' - Text recognition and retrieval protocol"
-	print "\t'W' - Generate fitness training report\n"
 	Protocol = raw_input("I choose: ")
 
 	if Protocol == 'C':
