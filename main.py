@@ -81,10 +81,6 @@ def main():
 			sys.exit("\nWe cannot comprehend your choice.\n")
 		print "\nBusting out the shrink ray...\n"
 		shrinkRay.shrinkImages(Home, HomeDirectory, dimension, heightOrWeight)
-	elif Protocol == 'T': # retrieves and translates text in photos
-		print "\nImproving human understanding...\n"
-	elif Protocol == 'W': # creates a report based on workout screenshots
-		print "\nGenerating training reports...\n"
 	else: 
 		print "\nThat's evil even by our standards! We absolutely cannot perform that experiment!\n"
 

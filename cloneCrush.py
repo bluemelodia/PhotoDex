@@ -156,7 +156,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		innerCount = 1 # track iterations in the inner loop
 
 		for innerKey, innerValue in similarities[key].items():
-			print str(innerKey) + " " + str(innerValue)
 			addImage = Image.open(innerKey)
 			wpercent = (basewidth / float(addImage.size[0]))
 			hsize = int((float(addImage.size[1]) * float(wpercent)))
@@ -167,11 +166,18 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		keyCount += 1
 		progressThree.update((float(keyCount)/validPics)*100)
 	progressThree.finish()
-	bigImage.save("similarities.jpg")
+	bigImage.save("sims.jpg")
 	bigImage.show()
 
 	# Allow users to specify similarity thresholds, ie. cluster them together if they are above x similarity
 	# You really need to sort the dictionaries before the image concatenation
+
+	print "Specify similarity cutoff (0 = identical, 1 = dissimilar) x. Any photo whose similarity value is below x will be relocated or purged."
+	threshold = raw_input("Cutoff: ")
+
+	if int(threshold) < 0 or int(threshold) > 1:
+		print "Such bounds are illegal!"
+	print threshold
 
 	"""
 
