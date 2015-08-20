@@ -30,7 +30,7 @@ Currently supported experimental procedures are outlined below:<br />
 		    Relative Path to Source Directory: ../Profile_Pictures
 		    Relative Path to Destination Directory: ../Profile_Pictures_Original
 		    I choose: D
-		    Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): P
+		    Do you want to move or purge similar images? ('M' - move, 'P' - purge): P
 		    Enter relative path to your query image: ../cero.png
     
     Protocol 'F': Detecting humans and relocating photos that feature them as the subject matter.
