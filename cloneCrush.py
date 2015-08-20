@@ -183,8 +183,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 	print "\nImage clustering begins...\n"
 
-	progressFour = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
-
 	# Prepare the clusters array, starting with each image in its own separate cluster
 	clusters = {}
 	clusterCount = 0
@@ -220,6 +218,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	draw = ImageDraw.Draw(clusterImage)
 	currentCluster = 0
 
+	progressFour = ProgressBar(widgets=[Percentage(), Bar()], maxval=100).start()
+
 	# create an image showing all image clusters
 	for index, group in enumerate(clusters):
 		currentImage = 0
@@ -231,7 +231,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
 			clusterImage.paste(resizedImg, (100*currentImage, 100*currentCluster))
 			if currentImage == 0:
-				draw.text((100*currentImage, 100*currentCluster), str(currentCluster), (255, 255, 255), font=font)
+				draw.text((100*currentImage, 100*currentCluster), str(group), (255, 255, 255), font=font)
 			currentImage += 1
 		currentCluster += 1
 		progressFour.update((float(currentCluster)/len(clusters))*100)
