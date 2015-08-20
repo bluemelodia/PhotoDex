@@ -196,7 +196,8 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 	for key, value in similarities.items():
 		for innerKey, innerValue in similarities[key].items():
-			if (innerValue < threshold):
+			print "innervalue: " + str(innerValue) + " vs " + str(threshold)
+			if (float(innerValue) < float(threshold)):
 				for i in range(len(clusters)):
 					try:
 						if key in clusters[i] and innerKey not in clusters[i]:
