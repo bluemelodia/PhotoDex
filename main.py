@@ -56,7 +56,7 @@ def main():
 		else:
 			sys.exit("\nSorry, that option was blasted into smithereens with most of the dinosaurs...\n")
 	elif Protocol == 'D':
-		cloneFate = raw_input("Do you want to move or purge similar images? ('M' - relocate, 'P' - purge): ")
+		cloneFate = raw_input("Do you want to move or purge similar images? ('M' - move, 'P' - purge): ")
 		if cloneFate != 'M' and cloneFate != 'P': 
 			sys.exit("\nWe don't have the funding for that!\n")
 		print "\nActivating clone detection algorithm...\n"

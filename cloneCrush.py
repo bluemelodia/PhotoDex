@@ -241,7 +241,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 	print "\nFor each cluster, specify which image you wish to keep. Clusters with only one image will be skipped.\n"
 	for index, group in enumerate(clusters):
-		print "Hi"
 		if len(clusters[group]) < 2:
 			continue
 		print "Acceptable range for cluster " + str(group) + ": 1-" + str(len(clusters[group]))
@@ -249,43 +248,18 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		
 		keep = int(keep)-1 # turn it back into comp sci ranges
 		if float(keep) >= 0 and float(keep) < len(clusters[group]):
-			print "PURGING TIME"
-
-	"""
-
-	# Allow users to specify numbers and ranges corresponding to what they want to move
-	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
-	print "Legal photo numbers for your directory range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
-	var = raw_input("List: ")
-	splits = var.split(",", 1) # split string by commans
-	move = []
-
-	for i in range(len(splits)):
-		splits[i] = splits[i].replace(" ", "") # replace spaces in string
-		if "-" in splits[i]:
-			dashed = splits[i].split("-", 1)
-			if not (dashed[0].isdigit() and dashed[1].isdigit()):
-				continue
-			if int(dashed[0]) > int(dashed[1]):
-				temp = dashed[1]
-				dashed[1] = dashed[0]
-				dashed[0] = temp
-			if int(dashed[0]) < 1:
-				print str(int(dashed[0])) + " is too puny for our instruments to detect. Raising to min acceptable number...\n"				
-				dashed[0] = 1
-			if int(dashed[1]) >= len(sorted_dictionary):
-				print str(int(dashed[1])) + " is beyond our comprehension. Truncating to max acceptable number...\n"
-				dashed[1] = len(sorted_dictionary)-1
-			print "Start: " + str(dashed[0])
-			print "End: " + str(dashed[1])
-			for j in range(int(dashed[0]), int(dashed[1])):
-				move.append(int(j))
-			move.append(int(dashed[1]))
-		else:
-			if not splits[i].isdigit():
-				continue
-			if int(splits[i]) < 1 or int(splits[i]) >= len(sorted_dictionary):
-				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
-				continue
-			move.append(int(splits[i]))
-"""
+			for i in range(len(clusters[group])):
+				if i == keep:
+					continue
+				else:
+					thisGroup = clusters[group]
+					if flag == 'M':
+						try:
+							os.rename(thisGroup[i], destDir + "/" + os.path.basename(thisGroup[i]))
+						except:
+							continue
+					else:
+						try: 
+							os.remove(os.path.basename(thisGroup[i]))
+						except:
+							continue
