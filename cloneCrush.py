@@ -192,11 +192,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		clusters[clusterCount] = []
 		clusters[clusterCount].append(key)
 		clusterCount += 1
-	print "START: " + str(clusters)
 
 	for key, value in similarities.items():
 		for innerKey, innerValue in similarities[key].items():
-			print "innervalue: " + str(innerValue) + " vs " + str(threshold)
 			if (float(innerValue) < float(threshold)):
 				for i in range(len(clusters)):
 					try:
@@ -208,16 +206,13 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 								if innerKey in clusters[j]:
 									clusters.pop(j)
 									break
-							print "Updated clusters: " + str(clusters)
 					except:
 						continue
-
 	
 	print "Final clusters: " + str(clusters)
 
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
-	print "length: " + str(len(clusters))
 	for i in range(len(clusters)):
 		try:
 			if len(clusters[i]) > longest:
@@ -226,37 +221,30 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			continue
 
 	print longest
+	
 	print "\nGenerating cluster images...\n"
-
-
-	#progressFour.finish()
-	"""
-	newClusters = 0
-	outerCount = 0
-	for key, value in similarities.items():
-		for innerKey, innerValue in similarities[key].items():
-			if innerValue < threshold:
-
-				purgeIndex = 1000
-				for index, image in clusters.iteritems():
-					print str(image[0]) + " vs " + str(innerKey) + "\n" #image is a number now
-					if image[0] == innerKey:
-						purgeIndex = index
-				if purgeIndex != 1000:
-					clusters.pop(purgeIndex)
-		outerCount += 1
-		print clusters
-		progressFour.update((float(keyCount)/validPics)*100)
+	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
+	draw = ImageDraw.Draw(clusterImage)
+	currentCluster = 0
+	# create an image showing all image clusters
+	for index, group in enumerate(clusters):
+		currentImage = 0
+		print clusters[index]
+		for image in clusters[index]:
+			print image
+			basewidth = 100
+			baseImage = Image.open(image)
+			wpercent = (basewidth / float(baseImage.size[0]))
+			hsize = int((float(baseImage.size[1]) * float(wpercent)))
+			resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+			clusterImage.paste(resizedImg, (currentImage, 100*index))
+			currentImage += 1
+		currentCluster += 1
+		progressFour.update((float(currentCluster)/len(clusters))*100)
+	clusterImage.save("clusters.jpg")
+	clusterImage.show()
 	progressFour.finish()
-	print "DONE: " + str(clusters)
-
-	print "\nGenerating cluster images...\n"
-
-	#find the longest cluster (the cluster with the most number of images in it)
-	longest = 0
-	for index, image in enumerate(clusters):
-		if len(clusters[index]) > longest:
-			longest = len(clusters[index])
+	"""
 
 	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
 	draw = ImageDraw.Draw(clusterImage)
@@ -276,8 +264,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		currentCluster += 1
 	clusterImage.save("clusters.jpg")
 	clusterImage.show()"""
-
-	#TODO: crash bug when you use iphone photos short as the directory
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
