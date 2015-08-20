@@ -277,11 +277,9 @@ def queryByColor(imageDir, directory, queryImage, destDir):
 	var = raw_input("List: ")
 	splits = var.split(",") # split string by commans
 	move = []
-	print splits
 
 	for i in range(len(splits)):
 		splits[i] = splits[i].replace(" ", "") # replace spaces in string
-		print "SPLIT: " + str(splits[i])
 		if "-" in splits[i]:
 			dashed = splits[i].split("-", 1)
 			if not (dashed[0].isdigit() and dashed[1].isdigit()):
