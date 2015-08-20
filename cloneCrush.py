@@ -209,8 +209,6 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 					except:
 						continue
 	
-	print "Final clusters: " + str(clusters)
-
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
 	for i in range(len(clusters)):
@@ -219,24 +217,27 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 				longest = len(clusters[i])
 		except:
 			continue
-
-	print longest
 	
 	print "\nGenerating cluster images...\n"
 	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
 	draw = ImageDraw.Draw(clusterImage)
 	currentCluster = 0
+	print "Final clusters: " + str(clusters)
+
 	# create an image showing all image clusters
 	for index, group in enumerate(clusters):
 		currentImage = 0
 		try:
-			for image in clusters[index]:
+			for image in clusters[group]:
+				print image
 				basewidth = 100
 				baseImage = Image.open(image)
 				wpercent = (basewidth / float(baseImage.size[0]))
 				hsize = int((float(baseImage.size[1]) * float(wpercent)))
 				resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
 				clusterImage.paste(resizedImg, (100*currentImage, 100*currentCluster))
+				if currentImage == 0:
+					draw.text((100*currentImage, 100*currentCluster), str(currentCluster), (255, 255, 255), font=font)
 				currentImage += 1
 			currentCluster += 1
 			progressFour.update((float(currentCluster)/len(clusters))*100)
@@ -245,26 +246,16 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	clusterImage.save("clusters.jpg")
 	clusterImage.show()
 	progressFour.finish()
-	"""
 
-	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
-	draw = ImageDraw.Draw(clusterImage)
-
-	currentCluster = 0
-	# create an image showing all image clusters
-	for index, group in enumerate(clusters):
-		currentImage = 0
-		for image in clusters[index]:
-			basewidth = 100
-			baseImage = Image.open(image)
-			wpercent = (basewidth / float(baseImage.size[0]))
-			hsize = int((float(baseImage.size[1]) * float(wpercent)))
-			resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-			bigImage.paste(resizedImg, (currentImage, 100*index))
-			currentImage += 1
-		currentCluster += 1
-	clusterImage.save("clusters.jpg")
-	clusterImage.show()"""
+	print "\nFor each cluster, specify which image you wish to keep. Clusters with only one image will be skipped.\n"
+	for i in range(len(clusters)):
+		try:
+			if len(clusters[i]) < 2:
+				continue
+			keep = raw_input("Cluster " + str(i) + ": ")
+			print "You chose: " + str(keep)
+		except:
+			continue
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
