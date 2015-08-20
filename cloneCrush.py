@@ -211,38 +211,30 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
-	for i in range(len(clusters)):
-		try:
-			if len(clusters[i]) > longest:
-				longest = len(clusters[i])
-		except:
-			continue
+	for index, group in enumerate(clusters):
+		if len(clusters[group]) > longest:
+			longest = len(clusters[group])
 	
 	print "\nGenerating cluster images...\n"
 	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
 	draw = ImageDraw.Draw(clusterImage)
 	currentCluster = 0
-	print "Final clusters: " + str(clusters)
 
 	# create an image showing all image clusters
 	for index, group in enumerate(clusters):
 		currentImage = 0
-		try:
-			for image in clusters[group]:
-				print image
-				basewidth = 100
-				baseImage = Image.open(image)
-				wpercent = (basewidth / float(baseImage.size[0]))
-				hsize = int((float(baseImage.size[1]) * float(wpercent)))
-				resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-				clusterImage.paste(resizedImg, (100*currentImage, 100*currentCluster))
-				if currentImage == 0:
-					draw.text((100*currentImage, 100*currentCluster), str(currentCluster), (255, 255, 255), font=font)
-				currentImage += 1
-			currentCluster += 1
-			progressFour.update((float(currentCluster)/len(clusters))*100)
-		except:
-			continue
+		for image in clusters[group]:
+			basewidth = 100
+			baseImage = Image.open(image)
+			wpercent = (basewidth / float(baseImage.size[0]))
+			hsize = int((float(baseImage.size[1]) * float(wpercent)))
+			resizedImg = baseImage.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+			clusterImage.paste(resizedImg, (100*currentImage, 100*currentCluster))
+			if currentImage == 0:
+				draw.text((100*currentImage, 100*currentCluster), str(currentCluster), (255, 255, 255), font=font)
+			currentImage += 1
+		currentCluster += 1
+		progressFour.update((float(currentCluster)/len(clusters))*100)
 	clusterImage.save("clusters.jpg")
 	clusterImage.show()
 	progressFour.finish()
