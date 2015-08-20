@@ -213,7 +213,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		if len(clusters[group]) > longest:
 			longest = len(clusters[group])
 	
-	print "\nGenerating cluster images...\n"
+	print "Generating cluster images...\n"
 	clusterImage = Image.new('RGB', (100*(longest), 100*(len(clusters))))
 	draw = ImageDraw.Draw(clusterImage)
 	currentCluster = 0
@@ -240,14 +240,17 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	progressFour.finish()
 
 	print "\nFor each cluster, specify which image you wish to keep. Clusters with only one image will be skipped.\n"
-	for i in range(len(clusters)):
-		try:
-			if len(clusters[i]) < 2:
-				continue
-			keep = raw_input("Cluster " + str(i) + ": ")
-			print "You chose: " + str(keep)
-		except:
+	for index, group in enumerate(clusters):
+		print "Hi"
+		if len(clusters[group]) < 2:
 			continue
+		print "Acceptable range for cluster " + str(group) + ": 1-" + str(len(clusters[group]))
+		keep = raw_input("Cluster " + str(group) + ": ")
+		
+		keep = int(keep)-1 # turn it back into comp sci ranges
+		if float(keep) >= 0 and float(keep) < len(clusters[group]):
+			print "PURGING TIME"
+
 	"""
 
 	# Allow users to specify numbers and ranges corresponding to what they want to move
