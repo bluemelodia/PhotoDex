@@ -194,6 +194,19 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		clusterCount += 1
 	print "START: " + str(clusters)
 
+	for key, value in similarities.items():
+		print key 
+		print value
+		print ""
+		for innerKey, innerValue in similarities[key].items():
+			print "VALUE " + str(innerKey) + " " + str(innerValue)
+			if (innerValue < threshold):
+				print "MERGE: " + str(innerKey)
+				for i in range(len(clusters)):
+					print "LOOKING: " + str(key) + " " + str(clusters[i])
+					if key in clusters[i]:
+						clusters[i].append(innerKey)
+				print "NEW CLUSTERS: " + str(clusters)
 	"""
 	newClusters = 0
 	outerCount = 0
