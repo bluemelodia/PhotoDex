@@ -185,29 +185,30 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 
 	# Prepare the clusters array, starting with each image in its own separate cluster
 	clusters = {}
-	clusterCount = 0
-	for key, value in similarities.items():
-		clusters[clusterCount] = []
-		clusters[clusterCount].append(key)
-		clusterCount += 1
+	keysIn = []
+	current = 0
+
+	for i in range(len(similarities)):
+		clusters[i] = []
 
 	for key, value in similarities.items():
+		if key in keysIn:
+			continue
+		clusters[current].append(key)
+		keysIn.append(key)
 		for innerKey, innerValue in similarities[key].items():
-			if (float(innerValue) < float(threshold)):
-				for i in range(len(clusters)):
-					try:
-						if key in clusters[i] and innerKey not in clusters[i]:
-							clusters[i].append(innerKey)
-							for j in range(len(clusters)):
-								if i == j:
-									continue
-								if innerKey in clusters[j]:
-									clusters.pop(j)
-									break
-					except:
-						continue
-
-	print clusters
+			if float(innerValue) < float(threshold):
+				clusters[current].append(innerKey)
+				keysIn.append(innerKey)
+				print "Clusters: " + str(clusters)
+		current += 1
+		"""if key not in clusters:
+			clusters[key] = {}
+		print "CLUSTERS: " + str(clusters)
+		print similarities.items()
+		for innerKey, innerValue in similarities[key].items():
+			print "KEY: " + str(innerKey) + " " + str(innerValue)
+		"""
 
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
