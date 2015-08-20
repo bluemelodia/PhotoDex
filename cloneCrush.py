@@ -195,18 +195,23 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 	print "START: " + str(clusters)
 
 	for key, value in similarities.items():
-		print key 
-		print value
-		print ""
 		for innerKey, innerValue in similarities[key].items():
-			print "VALUE " + str(innerKey) + " " + str(innerValue)
 			if (innerValue < threshold):
-				print "MERGE: " + str(innerKey)
 				for i in range(len(clusters)):
-					print "LOOKING: " + str(key) + " " + str(clusters[i])
-					if key in clusters[i]:
-						clusters[i].append(innerKey)
-				print "NEW CLUSTERS: " + str(clusters)
+					try:
+						if key in clusters[i] and innerKey not in clusters[i]:
+							clusters[i].append(innerKey)
+							for j in range(len(clusters)):
+								if i == j:
+									continue
+								if innerKey in clusters[j]:
+									clusters.pop(j)
+									break
+							print "Updated clusters: " + str(clusters)
+					except:
+						continue
+
+	print "Final clusters: " + str(clusters)
 	"""
 	newClusters = 0
 	outerCount = 0
