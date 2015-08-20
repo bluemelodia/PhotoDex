@@ -206,7 +206,9 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 									break
 					except:
 						continue
-	
+
+	print clusters
+
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
 	for index, group in enumerate(clusters):

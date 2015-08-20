@@ -275,11 +275,13 @@ def queryByColor(imageDir, directory, queryImage, destDir):
 	print "List the numbers and ranges of images that you want to move, separating each entry with a comma. Example: 1-4, 6, 8, 11-15."
 	print "Legal photo numbers for your directory range from 1 to " + str(len(sorted_dictionary)-1) + ".\n"
 	var = raw_input("List: ")
-	splits = var.split(",", 1) # split string by commans
+	splits = var.split(",") # split string by commans
 	move = []
+	print splits
 
 	for i in range(len(splits)):
 		splits[i] = splits[i].replace(" ", "") # replace spaces in string
+		print "SPLIT: " + str(splits[i])
 		if "-" in splits[i]:
 			dashed = splits[i].split("-", 1)
 			if not (dashed[0].isdigit() and dashed[1].isdigit()):
@@ -300,7 +302,9 @@ def queryByColor(imageDir, directory, queryImage, destDir):
 				move.append(int(j))
 			move.append(int(dashed[1]))
 		else:
+			print splits[i]
 			if not splits[i].isdigit():
+				print "Not a digit"
 				continue
 			if int(splits[i]) < 1 or int(splits[i]) >= len(sorted_dictionary):
 				print str(int(splits[i])) + " is out of orbit. Skipping...\n"
