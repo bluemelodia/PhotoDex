@@ -212,7 +212,24 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 					except:
 						continue
 
+	
 	print "Final clusters: " + str(clusters)
+
+	#find the longest cluster (the cluster with the most number of images in it)
+	longest = 0
+	print "length: " + str(len(clusters))
+	for i in range(len(clusters)):
+		try:
+			if len(clusters[i]) > longest:
+				longest = len(clusters[i])
+		except:
+			continue
+
+	print longest
+	print "\nGenerating cluster images...\n"
+
+
+	#progressFour.finish()
 	"""
 	newClusters = 0
 	outerCount = 0

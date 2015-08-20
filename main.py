@@ -80,7 +80,7 @@ def main():
 		print "\nBusting out the shrink ray...\n"
 		shrinkRay.shrinkImages(Home, HomeDirectory, dimension, heightOrWeight)
 	else: 
-		print "\nThat's evil even by our standards! We absolutely cannot perform that experiment!\n"
+		print "\nGee, that's evil even by our standards!\n"
 
 	print "- - - - - Thank you for visiting PhotoDex Laboratory - - - - -\n"
 
