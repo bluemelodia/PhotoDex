@@ -200,15 +200,7 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 			if float(innerValue) < float(threshold):
 				clusters[current].append(innerKey)
 				keysIn.append(innerKey)
-				print "Clusters: " + str(clusters)
 		current += 1
-		"""if key not in clusters:
-			clusters[key] = {}
-		print "CLUSTERS: " + str(clusters)
-		print similarities.items()
-		for innerKey, innerValue in similarities[key].items():
-			print "KEY: " + str(innerKey) + " " + str(innerValue)
-		"""
 
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
@@ -250,13 +242,16 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		keep = raw_input("Cluster " + str(group) + ": ")
 		
 		keep = int(keep)-1 # turn it back into comp sci ranges
-		if float(keep) >= 0 and float(keep) < len(clusters[group]):
+		if int(keep) >= 0 and int(keep) < len(clusters[group]):
 			for i in range(len(clusters[group])):
-				if i == keep:
+				print "Iterating"
+				if int(i) == int(keep):
+					print "Continue"
 					continue
 				else:
 					thisGroup = clusters[group]
 					if flag == 'M':
+						print "Moving " + str(i)
 						try:
 							os.rename(thisGroup[i], destDir + "/" + os.path.basename(thisGroup[i]))
 						except:
@@ -266,3 +261,4 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 							os.remove(os.path.basename(thisGroup[i]))
 						except:
 							continue
+	print "\n"
