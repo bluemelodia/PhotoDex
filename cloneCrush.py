@@ -202,6 +202,11 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 				keysIn.append(innerKey)
 		current += 1
 
+	#delete the groups without any pictures in them
+	for i in range(len(clusters)):
+		if len(clusters[i]) < 1:
+			clusters.pop(i)
+
 	#find the longest cluster (the cluster with the most number of images in it)
 	longest = 0
 	for index, group in enumerate(clusters):
@@ -244,14 +249,11 @@ def cloneCrusher(imageDir, directory, destDir, flag):
 		keep = int(keep)-1 # turn it back into comp sci ranges
 		if int(keep) >= 0 and int(keep) < len(clusters[group]):
 			for i in range(len(clusters[group])):
-				print "Iterating"
 				if int(i) == int(keep):
-					print "Continue"
 					continue
 				else:
 					thisGroup = clusters[group]
 					if flag == 'M':
-						print "Moving " + str(i)
 						try:
 							os.rename(thisGroup[i], destDir + "/" + os.path.basename(thisGroup[i]))
 						except:
