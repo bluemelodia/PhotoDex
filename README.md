@@ -1,4 +1,4 @@
-|- - - - - - - - - Welcome to PhotoDex Laboratory - - - - - - - - -|
+|- - - - - - - - - - Welcome to PhotoDex Laboratory - - - - - - - - - -|
 
 We are a (mostly) ethical laboratory that specializes in manipulating and mutating directories of photos.<br />
 Currently supported experimental procedures are outlined below:<br />
